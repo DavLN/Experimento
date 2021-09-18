@@ -11,7 +11,16 @@ public class PhoneCall {
     private String destinationNumber;
     private PhoneCallType phoneCallType;
     private PhoneCallStatus phoneCallStatus;
-    
+
+	public PhoneCall(PhoneCall call) {
+		super();
+		this.customerId = call.getCustomerId();
+		this.startDate = call.getStartDate();
+		this.duration = call.getDuration();
+		this.destinationNumber = call.getDestinationNumber();
+		this.phoneCallType = call.getPhoneCallType();
+	}
+
 	public PhoneCall(Long clientId, LocalDateTime startDate, Long duration, String destinationNumber,
 			PhoneCallType phoneCallType) {
 		super();

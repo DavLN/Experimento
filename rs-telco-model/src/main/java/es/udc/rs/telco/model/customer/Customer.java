@@ -10,7 +10,15 @@ public class Customer {
     private String address;
     private LocalDateTime creationDate;
     private String phoneNumber;
-    
+
+
+	public Customer(Customer customer) {
+		super();
+		this.name = customer.getName();
+		this.dni = customer.getDni();
+		this.address = customer.getAddress();
+		this.phoneNumber = customer.getPhoneNumber();
+	}
 
 	public Customer(String name, String dni, String address, String phoneNumber) {
 		super();
