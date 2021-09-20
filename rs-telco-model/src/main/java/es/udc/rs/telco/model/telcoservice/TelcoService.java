@@ -1,10 +1,10 @@
 package es.udc.rs.telco.model.telcoservice;
 
-import com.sun.istack.internal.Nullable;
 import es.udc.rs.telco.model.customer.Customer;
+import es.udc.rs.telco.model.exceptions.MonthNotEnded;
 import es.udc.rs.telco.model.phonecall.PhoneCall;
-import es.udc.rs.telco.model.phonecall.PhoneCallStatus;
 import es.udc.rs.telco.model.phonecall.PhoneCallType;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +17,8 @@ public interface TelcoService {
     Customer getCustomerData(Long id);
     Customer searchForCustomer(String text);
     PhoneCall addPhoneCall(PhoneCall call);
-    List<PhoneCall> getPhoneCallsInMonth(Customer customer, LocalDateTime month);
+    List<PhoneCall> getPhoneCallsInMonth(Customer customer, LocalDateTime month) throws MonthNotEnded;
     PhoneCall updatePhoneCall(PhoneCall call);
-    List<PhoneCall> getPhoneCallsFromTo(Customer customer, LocalDateTime  begin, LocalDateTime end, @Nullable PhoneCallType type);
+    List<PhoneCall> getPhoneCallsFromTo(Customer customer, LocalDateTime  begin, LocalDateTime end,
+                                        @Nullable PhoneCallType type) throws MonthNotEnded;
 }

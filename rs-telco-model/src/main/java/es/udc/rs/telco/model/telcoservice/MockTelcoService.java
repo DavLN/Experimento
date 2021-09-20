@@ -6,7 +6,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
+import es.udc.rs.telco.model.exceptions.MonthNotEnded;
+
 import es.udc.rs.telco.model.customer.Customer;
 import es.udc.rs.telco.model.phonecall.PhoneCall;
 import es.udc.rs.telco.model.phonecall.PhoneCallType;
@@ -30,8 +32,10 @@ public class MockTelcoService implements TelcoService {
 	}
 
 
-	public Customer createCustomer(Customer customer) {
-		return clientsMap.put(getNextClientId(), customer);
+	public Customer createCustomer(Customer customer) { // TODO: crear número para cliente
+		clientsMap.put(getNextClientId(), customer);
+
+		return customer; // Simular regreso de BBDD??
 	}
 
 	public void removeCustomer(Long id) {
@@ -43,7 +47,12 @@ public class MockTelcoService implements TelcoService {
 	}
 
 	public Customer getCustomerData(Long id) {
-		return new Customer(clientsMap.get(id));
+		Customer searchedCustomer = clientsMap.get(id);
+
+		if (searchedCustomer == null)
+			return null;
+		else
+			return new Customer(clientsMap.get(id));
 	}
 
 	public Customer searchForCustomer(String text) {
@@ -59,7 +68,7 @@ public class MockTelcoService implements TelcoService {
 		return phoneCallsMap.put(getNextPhoneCallId(), call);
 	}
 
-	public List<PhoneCall> getPhoneCallsInMonth(Customer customer, LocalDateTime month) {
+	public List<PhoneCall> getPhoneCallsInMonth(Customer customer, LocalDateTime month) throws MonthNotEnded {
 		if (month.isBefore(LocalDateTime.now())) {
 			List<PhoneCall> calls = new ArrayList<>();
 			List<PhoneCall> list = phoneCallsByUserMap.get(customer);
@@ -70,14 +79,15 @@ public class MockTelcoService implements TelcoService {
 				}
 			}
 			return calls;
-		} else throw new NullPointerException();
+		} else throw new MonthNotEnded();
 	}
 
 	public PhoneCall updatePhoneCall(PhoneCall call) {
 		return addPhoneCall(call);
 	}
 
-	public List<PhoneCall> getPhoneCallsFromTo(Customer customer, LocalDateTime  begin, LocalDateTime end, @Nullable PhoneCallType type) {
+	public List<PhoneCall> getPhoneCallsFromTo(Customer customer, LocalDateTime  begin, LocalDateTime end,
+											   @Nullable PhoneCallType type) throws MonthNotEnded {
 		if (begin.isBefore(LocalDateTime.now())) {
 
 			List<PhoneCall> calls = new ArrayList<>();
@@ -91,6 +101,6 @@ public class MockTelcoService implements TelcoService {
 				}
 			}
 			return calls;
-		} else throw new NullPointerException();
+		} else throw new MonthNotEnded();
 	}
 }
