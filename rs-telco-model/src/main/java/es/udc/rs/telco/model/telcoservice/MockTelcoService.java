@@ -32,10 +32,12 @@ public class MockTelcoService implements TelcoService {
 	}
 
 
-	public Customer createCustomer(Customer customer) { // TODO: crear número para cliente
-		clientsMap.put(getNextClientId(), customer);
+	public Customer createCustomer(Customer customer) {
+		Long id = getNextClientId();
+		customer.setCustomerId(id); // Almacenar id
 
-		return customer; // Simular regreso de BBDD??
+		clientsMap.put(id, customer); // Insertar en mapa
+		return new Customer(customer); // Simular regreso de BBDD??
 	}
 
 	public void removeCustomer(Long id) {
@@ -43,7 +45,10 @@ public class MockTelcoService implements TelcoService {
 	}
 
 	public Customer updateCustomer(Customer customer) {
-		return createCustomer(customer);
+		Long id = customer.getCustomerId(); // Recuperar id
+
+		clientsMap.put(id, customer); // Actualizar mapa
+		return new Customer(customer);
 	}
 
 	public Customer getCustomerData(Long id) {

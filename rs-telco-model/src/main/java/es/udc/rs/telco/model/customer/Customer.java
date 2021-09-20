@@ -15,6 +15,7 @@ public class Customer {
 
 	public Customer(Customer customer) {
 		super();
+		this.customerId = customer.getCustomerId();
 		this.name = customer.getName();
 		this.dni = customer.getDni();
 		this.address = customer.getAddress();

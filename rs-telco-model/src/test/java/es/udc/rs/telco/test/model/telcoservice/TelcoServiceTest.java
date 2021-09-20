@@ -35,8 +35,10 @@ public class TelcoServiceTest {
 
         Customer newClient = telcoService.createCustomer(c1);
 
-        assertEquals(c1, newClient);
-        assertEquals(c1,telcoService.getCustomerData(1L)); // Adaptar a ids de BBDD?
+        c1.setCustomerId(newClient.getCustomerId()); // Definir id a c1
+        assertEquals(c1, newClient); // Realizar comparación
+
+        assertEquals(c1,telcoService.getCustomerData(newClient.getCustomerId()));
     }
 
 
@@ -45,22 +47,34 @@ public class TelcoServiceTest {
         assertNotNull(telcoService);
 
         Customer deletedClient = null;
+        Long id;
 
-        telcoService.createCustomer(c1);
+        id = (telcoService.createCustomer(c1)).getCustomerId();
 
-        telcoService.removeCustomer(1L);
-        deletedClient = telcoService.getCustomerData(1L);
+        telcoService.removeCustomer(id);
+        deletedClient = telcoService.getCustomerData(id);
 
         assertNull(deletedClient);
 
     }
 
-    /*
     @Test
     public void testUpdateCustomer() {
+        Customer newClient = telcoService.createCustomer(c1);
+        c1.setCustomerId(newClient.getCustomerId()); // Asignar id a c1
 
+        newClient.setName("cAlterado");
+        newClient.setPhoneNumber("1");
+        newClient.setAddress("CAMBIO");
+
+
+        assertEquals(telcoService.getCustomerData(newClient.getCustomerId()),c1);
+
+        telcoService.updateCustomer(newClient);
+
+        assertEquals(telcoService.getCustomerData(newClient.getCustomerId()),newClient);
     }
-
+    /*
     @Test
     public void testsearchForCustomer() {
 
