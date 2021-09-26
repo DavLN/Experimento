@@ -1,6 +1,7 @@
 package es.udc.rs.telco.model.customer;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Customer {
 
@@ -14,6 +15,7 @@ public class Customer {
 
 	public Customer(Customer customer) {
 		super();
+		this.customerId = customer.getCustomerId();
 		this.name = customer.getName();
 		this.dni = customer.getDni();
 		this.address = customer.getAddress();
@@ -89,4 +91,16 @@ public class Customer {
 				'}';
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Customer customer = (Customer) o;
+		return Objects.equals(customerId, customer.customerId) && Objects.equals(name, customer.name) && Objects.equals(dni, customer.dni) && Objects.equals(address, customer.address) && Objects.equals(creationDate, customer.creationDate) && Objects.equals(phoneNumber, customer.phoneNumber);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(customerId, name, dni, address, creationDate, phoneNumber);
+	}
 }
