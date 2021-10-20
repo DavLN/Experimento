@@ -29,14 +29,23 @@
         <partnerLink name="PartnerLinkPhoneCallSearch" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" partnerLinkType="tns:Client" myRole="ClientPortTypeRole"/>
     </partnerLinks>
     <variables>
-        <variable name="CostList" messageType="ns4:createAndSendBill"/>
+        <variable name="CostListIndex" type="xs:int"/>
+        <variable name="CostList" messageType="ns4:createAndSendBill">
+            <sxed:editor>
+                <sxed:predicate path="$CostList.parameters/priced-call/price[$CostListIndex]" source="to"/>
+            </sxed:editor>
+        </variable>
         <variable name="BillReceivedNotification" messageType="ns0:ClientOperationRequest"/>
         <variable name="CreateAndSendBillOut" xmlns:tns="http://rs.udc.es/billing" messageType="tns:createAndSendBillResponse"/>
         <variable name="CreateAndSendBillIn" xmlns:tns="http://rs.udc.es/billing" messageType="tns:createAndSendBill"/>
         <variable name="GetDiscountOut" messageType="ns1:getDiscountResponse"/>
         <variable name="GetDiscountIn" messageType="ns1:getDiscount"/>
         <variable name="index" type="xs:int"/>
-        <variable name="CallList" messageType="ns3:findCallsToBillResponse"/>
+        <variable name="CallList" messageType="ns3:findCallsToBillResponse">
+            <sxed:editor>
+                <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+            </sxed:editor>
+        </variable>
         <variable name="getCallsIn" xmlns:tns="http://rs.udc.es/telco" messageType="tns:findCallsToBill"/>
         <variable name="clientData" messageType="ns0:ClientOperationRequest"/>
         <variable name="ClientOperationIn" messageType="ns0:ClientOperationRequest"/>
@@ -85,23 +94,43 @@
                     <sequence name="Sequence1">
                         <assign name="Assign1">
                             <copy>
-                                <from>$CallList.parameters/return/destinationNumber</from>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/destinationNumber
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
                                 <to>$GetPhoneCallPriceIn.parameters/phoneCall/destinationNumber</to>
                             </copy>
                             <copy>
-                                <from>$CallList.parameters/return/duration</from>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/duration
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
                                 <to>$GetPhoneCallPriceIn.parameters/phoneCall/duration</to>
                             </copy>
                             <copy>
-                                <from>$CallList.parameters/return/phoneCallId</from>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/phoneCallId
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
                                 <to>$GetPhoneCallPriceIn.parameters/phoneCall/phoneCallId</to>
                             </copy>
                             <copy>
-                                <from>$CallList.parameters/return/phoneCallType</from>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/phoneCallType
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
                                 <to>$GetPhoneCallPriceIn.parameters/phoneCall/phoneCallType</to>
                             </copy>
                             <copy>
-                                <from>$CallList.parameters/return/startDate</from>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/startDate
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
                                 <to>$GetPhoneCallPriceIn.parameters/phoneCall/startDate</to>
                             </copy>
                         </assign>
@@ -109,7 +138,15 @@
                         <assign name="Assign2">
                             <copy>
                                 <from>$GetPhoneCallPriceOut.parameters/return</from>
-                                <to>$CostList.parameters/priced-call/price</to>
+                                <to>$CostList.parameters/priced-call[$CostListIndex]/price
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CostList.parameters/priced-call[$CostListIndex]" source="to"/>
+                                    </sxed:editor>
+                                </to>
+                            </copy>
+                            <copy>
+                                <from>1 + $CostListIndex</from>
+                                <to variable="CostListIndex"/>
                             </copy>
                         </assign>
                     </sequence>
