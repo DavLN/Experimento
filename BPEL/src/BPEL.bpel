@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<process
+    name="BPEL"
+    targetNamespace="http://enterprise.netbeans.org/bpel/BPEL/BPEL"
+    xmlns:tns="http://enterprise.netbeans.org/bpel/BPEL/BPEL"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+    xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
+    xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
+    xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" xmlns:ns3="http://rs.udc.es/telco" xmlns:ns1="http://rs.udc.es/rating" xmlns:ns4="http://rs.udc.es/billing">
+    <import namespace="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" location="Client.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/BillingServiceWrapper" location="BillingServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://rs.udc.es/billing" location="BillingService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/RatingServiceWrapper" location="RatingServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://rs.udc.es/rating" location="RatingService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/RewardServiceWrapper" location="RewardServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://rs.udc.es/reward" location="RewardService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://enterprise.netbeans.org/bpel/TelcoServiceWrapper" location="TelcoServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://rs.udc.es/telco" location="TelcoService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://rs.udc.es/telco" location="TelcoService_schema.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <import namespace="http://rs.udc.es/rating" location="RatingService_schema.xsd" importType="http://www.w3.org/2001/XMLSchema"/>
+    <partnerLinks>
+        <partnerLink name="BillingService" xmlns:tns="http://enterprise.netbeans.org/bpel/BillingServiceWrapper" partnerLinkType="tns:BillingProviderLinkType" partnerRole="BillingProviderRole"/>
+        <partnerLink name="RatingService" xmlns:tns="http://enterprise.netbeans.org/bpel/RatingServiceWrapper" partnerLinkType="tns:RatingProviderLinkType" partnerRole="RatingProviderRole"/>
+        <partnerLink name="RewardService" xmlns:tns="http://enterprise.netbeans.org/bpel/RewardServiceWrapper" partnerLinkType="tns:RewardProviderLinkType" partnerRole="RewardProviderRole"/>
+        <partnerLink name="TelcoService" xmlns:tns="http://enterprise.netbeans.org/bpel/TelcoServiceWrapper" partnerLinkType="tns:TelcoProviderLinkType" partnerRole="TelcoProviderRole"/>
+        <partnerLink name="PartnerLinkPhoneCallSearch" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" partnerLinkType="tns:Client" myRole="ClientPortTypeRole"/>
+    </partnerLinks>
+    <variables>
+        <variable name="CostListIndex" type="xs:int"/>
+        <variable name="CostList" messageType="ns4:createAndSendBill">
+            <sxed:editor>
+                <sxed:predicate path="$CostList.parameters/priced-call/price[$CostListIndex]" source="to"/>
+            </sxed:editor>
+        </variable>
+        <variable name="BillReceivedNotification" messageType="ns0:ClientOperationRequest"/>
+        <variable name="CreateAndSendBillOut" xmlns:tns="http://rs.udc.es/billing" messageType="tns:createAndSendBillResponse"/>
+        <variable name="CreateAndSendBillIn" xmlns:tns="http://rs.udc.es/billing" messageType="tns:createAndSendBill"/>
+        <variable name="GetDiscountOut" messageType="ns1:getDiscountResponse"/>
+        <variable name="GetDiscountIn" messageType="ns1:getDiscount"/>
+        <variable name="index" type="xs:int"/>
+        <variable name="CallList" messageType="ns3:findCallsToBillResponse">
+            <sxed:editor>
+                <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+            </sxed:editor>
+        </variable>
+        <variable name="getCallsIn" xmlns:tns="http://rs.udc.es/telco" messageType="tns:findCallsToBill"/>
+        <variable name="clientData" messageType="ns0:ClientOperationRequest"/>
+        <variable name="ClientOperationIn" messageType="ns0:ClientOperationRequest"/>
+    </variables>
+    <sequence>
+        <receive name="receiveClientData" createInstance="yes" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" portType="tns:ClientPortType" variable="clientData"/>
+        <assign name="AssignFindCallsToBillData">
+            <copy>
+                <from>;0</from>
+                <to partnerLink="RatingService"/>
+            </copy>
+            <copy>
+                <from>''</from>
+                <to>$CallList.parameters/return</to>
+            </copy>
+            <copy>
+                <from>1</from>
+                <to variable="index"/>
+            </copy>
+            <copy>
+                <from variable="clientData" part="id"/>
+                <to>$getCallsIn.parameters/customerId</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="month"/>
+                <to>$getCallsIn.parameters/month</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="year"/>
+                <to>$getCallsIn.parameters/year</to>
+            </copy>
+        </assign>
+        <invoke name="GetCallInfoFromTelco" partnerLink="TelcoService" operation="findCallsToBill" xmlns:tns="http://rs.udc.es/telco" portType="tns:TelcoProvider" inputVariable="getCallsIn" outputVariable="CallList"/>
+        <flow name="Flow1">
+            <forEach name="ForEach1" parallel="no" counterName="ForEach1Counter">
+                <startCounterValue>1</startCounterValue>
+                <finalCounterValue>count($CallList.parameters/return)</finalCounterValue>
+                <completionCondition>
+                    <branches>count($CallList.parameters/return)</branches>
+                </completionCondition>
+                <scope name="Scope1">
+                    <variables>
+                        <variable name="GetPhoneCallPriceOut" messageType="ns1:getPhoneCallPriceResponse"/>
+                        <variable name="GetPhoneCallPriceIn" messageType="ns1:getPhoneCallPrice"/>
+                    </variables>
+                    <sequence name="Sequence1">
+                        <assign name="Assign1">
+                            <copy>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/destinationNumber
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
+                                <to>$GetPhoneCallPriceIn.parameters/phoneCall/destinationNumber</to>
+                            </copy>
+                            <copy>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/duration
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
+                                <to>$GetPhoneCallPriceIn.parameters/phoneCall/duration</to>
+                            </copy>
+                            <copy>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/phoneCallId
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
+                                <to>$GetPhoneCallPriceIn.parameters/phoneCall/phoneCallId</to>
+                            </copy>
+                            <copy>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/phoneCallType
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
+                                <to>$GetPhoneCallPriceIn.parameters/phoneCall/phoneCallType</to>
+                            </copy>
+                            <copy>
+                                <from>$CallList.parameters/return[$ForEach1Counter]/startDate
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CallList.parameters/return[$ForEach1Counter]" source="from"/>
+                                    </sxed:editor>
+                                </from>
+                                <to>$GetPhoneCallPriceIn.parameters/phoneCall/startDate</to>
+                            </copy>
+                        </assign>
+                        <invoke name="getCostOfCall" partnerLink="RatingService" operation="getPhoneCallPrice" portType="ns1:RatingProvider" inputVariable="GetPhoneCallPriceIn" outputVariable="GetPhoneCallPriceOut"/>
+                        <assign name="Assign2">
+                            <copy>
+                                <from>$GetPhoneCallPriceOut.parameters/return</from>
+                                <to>$CostList.parameters/priced-call[$CostListIndex]/price
+                                    <sxed:editor>
+                                        <sxed:predicate path="$CostList.parameters/priced-call[$CostListIndex]" source="to"/>
+                                    </sxed:editor>
+                                </to>
+                            </copy>
+                            <copy>
+                                <from>1 + $CostListIndex</from>
+                                <to variable="CostListIndex"/>
+                            </copy>
+                        </assign>
+                    </sequence>
+                </scope>
+            </forEach>
+            <invoke name="getDiscount" partnerLink="RatingService" operation="getDiscount" portType="ns1:RatingProvider" inputVariable="GetDiscountIn" outputVariable="GetDiscountOut"/>
+        </flow>
+        <assign name="AssignBillingDataNOTFINISHED">
+            <copy>
+                <from variable="clientData" part="id"/>
+                <to>$CreateAndSendBillIn.parameters/customerId</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="month"/>
+                <to>$CreateAndSendBillIn.parameters/month</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="year"/>
+                <to>$CreateAndSendBillIn.parameters/year</to>
+            </copy>
+            <copy>
+                <from>$GetDiscountOut.parameters/return</from>
+                <to>$CreateAndSendBillIn.parameters/discount</to>
+            </copy>
+        </assign>
+        <invoke name="getTotalImportOfBill" partnerLink="BillingService" operation="createAndSendBill" xmlns:tns="http://rs.udc.es/billing" portType="tns:BillingProvider" inputVariable="CreateAndSendBillIn" outputVariable="CreateAndSendBillOut"/>
+        <pick name="Pick1">
+            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientOperation" portType="ns0:ClientPortType" variable="BillReceivedNotification"/>
+        </pick>
+        <invoke name="Invoke5"/>
+        <invoke name="Invoke6"/>
+        <pick name="Pick2">
+            <onMessage/>
+        </pick>
+        <flow name="Flow2">
+            <forEach name="ForEach2" parallel="no" counterName="ForEach2Counter">
+                <scope name="Scope2">
+                    <invoke name="Invoke7"/>
+                </scope>
+            </forEach>
+            <invoke name="Invoke8"/>
+        </flow>
+        <reply name="Reply1"/>
+    </sequence>
+</process>
