@@ -9,7 +9,7 @@
     xmlns:sxt="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Trace" 
     xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
     xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
-    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" xmlns:ns3="http://rs.udc.es/telco" xmlns:ns1="http://rs.udc.es/rating" xmlns:ns4="http://rs.udc.es/billing">
+    xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling" xmlns:ns0="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" xmlns:ns3="http://rs.udc.es/telco" xmlns:ns1="http://rs.udc.es/rating" xmlns:ns4="http://rs.udc.es/billing" xmlns:ns5="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:ns6="http://rs.udc.es/reward">
     <import namespace="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" location="Client.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://enterprise.netbeans.org/bpel/BillingServiceWrapper" location="BillingServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <import namespace="http://rs.udc.es/billing" location="BillingService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
@@ -29,6 +29,14 @@
         <partnerLink name="PartnerLinkPhoneCallSearch" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" partnerLinkType="tns:Client" myRole="ClientPortTypeRole"/>
     </partnerLinks>
     <variables>
+        <variable name="payOk" messageType="ns0:ClientOperationRequest"/>
+        <variable name="ClientOperationOut" messageType="ns0:ClientOperationResponse"/>
+        <variable name="RemovePendingPointsOut" xmlns:tns="http://rs.udc.es/reward" messageType="tns:removePendingPointsResponse"/>
+        <variable name="RemovePendingPointsIn" xmlns:tns="http://rs.udc.es/reward" messageType="tns:removePendingPoints"/>
+        <variable name="AddPendingPointsOut" xmlns:tns="http://rs.udc.es/reward" messageType="tns:addPendingPointsResponse"/>
+        <variable name="AddPendingPointsIn" xmlns:tns="http://rs.udc.es/reward" messageType="tns:addPendingPoints"/>
+        <variable name="ChangeStatusOut" messageType="ns3:changeStatusResponse"/>
+        <variable name="ChangeStatusIn" messageType="ns3:changeStatus"/>
         <variable name="CostListIndex" type="xs:int"/>
         <variable name="CostList" messageType="ns4:createAndSendBill">
             <sxed:editor>
@@ -174,21 +182,99 @@
         </assign>
         <invoke name="getTotalImportOfBill" partnerLink="BillingService" operation="createAndSendBill" xmlns:tns="http://rs.udc.es/billing" portType="tns:BillingProvider" inputVariable="CreateAndSendBillIn" outputVariable="CreateAndSendBillOut"/>
         <pick name="Pick1">
-            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientOperation" portType="ns0:ClientPortType" variable="BillReceivedNotification"/>
+            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientOperation" portType="ns0:ClientPortType" variable="BillReceivedNotification"></onMessage>
         </pick>
-        <invoke name="Invoke5"/>
-        <invoke name="Invoke6"/>
+        <assign name="AssingBilled">
+            <copy>
+                <from>'BILLED'</from>
+                <to>$ChangeStatusIn.parameters/newPhoneCallStatus</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="id"/>
+                <to>$ChangeStatusIn.parameters/customerId</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="month"/>
+                <to>$ChangeStatusIn.parameters/month</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="year"/>
+                <to>$ChangeStatusIn.parameters/year</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke5" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn" outputVariable="ChangeStatusOut"/>
+        <assign name="AssignPoints">
+            <copy>
+                <from>round($CreateAndSendBillOut.parameters/return/amount div 10)</from>
+                <to>$AddPendingPointsIn.parameters/points</to>
+            </copy>
+            <copy>
+                <from variable="clientData" part="id"/>
+                <to>$AddPendingPointsIn.parameters/customerId</to>
+            </copy>
+        </assign>
+        <invoke name="Invoke6" partnerLink="RewardService" operation="addPendingPoints" xmlns:tns="http://rs.udc.es/reward" portType="tns:RewardProvider" inputVariable="AddPendingPointsIn" outputVariable="AddPendingPointsOut"/>
         <pick name="Pick2">
-            <onMessage/>
+            <onMessage></onMessage>
         </pick>
-        <flow name="Flow2">
-            <forEach name="ForEach2" parallel="no" counterName="ForEach2Counter">
-                <scope name="Scope2">
-                    <invoke name="Invoke7"/>
-                </scope>
-            </forEach>
-            <invoke name="Invoke8"/>
-        </flow>
-        <reply name="Reply1"/>
+        <receive name="Receive1"/>
+        <receive name="Receive2" createInstance="no" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientOperation" portType="ns0:ClientPortType" variable="payOk"/>
+        <if name="If1">
+            <scope name="Scope2">
+                <variables>
+                        <variable name="ConfirmPendingPointsOut" messageType="ns6:confirmPendingPointsResponse"/>
+                            <variable name="ConfirmPendingPointsIn" messageType="ns6:confirmPendingPoints"/>
+                            <variable name="ChangeStatusOut1" messageType="ns3:changeStatusResponse"/>
+                            <variable name="ChangeStatusIn1" messageType="ns3:changeStatus"/>
+                    </variables>
+                    <sequence name="Sequence2">
+                        <assign name="Assign4">
+                            <copy>
+                                <from>$getCallsIn.parameters/customerId</from>
+                                <to>$ChangeStatusIn1.parameters/customerId</to>
+                            </copy>
+                            <copy>
+                                <from>$getCallsIn.parameters/month</from>
+                                <to>$ChangeStatusIn1.parameters/month</to>
+                            </copy>
+                            <copy>
+                                <from>$getCallsIn.parameters/year</from>
+                                <to>$ChangeStatusIn1.parameters/year</to>
+                            </copy>
+                            <copy>
+                                <from>'PAID'</from>
+                                <to>$ChangeStatusIn1.parameters/newPhoneCallStatus</to>
+                            </copy>
+                        </assign>
+                            <invoke name="Invoke7" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn1" outputVariable="ChangeStatusOut1"/>
+                            <assign name="Assign5">
+                            <copy>
+                                <from>$AddPendingPointsIn.parameters/points</from>
+                                <to>$ConfirmPendingPointsIn.parameters/points</to>
+                            </copy>
+                            <copy>
+                                <from>$AddPendingPointsIn.parameters/customerId</from>
+                                <to>$ConfirmPendingPointsIn.parameters/customerId</to>
+                            </copy>
+                        </assign>
+                            <invoke name="Invoke8" partnerLink="RewardService" operation="confirmPendingPoints" portType="ns6:RewardProvider" inputVariable="ConfirmPendingPointsIn" outputVariable="ConfirmPendingPointsOut"/>
+                    </sequence>
+            </scope>
+            <else>
+                <sequence name="FlowSequence">
+                    <assign name="Assign3">
+                            <copy>
+                                    <from>$AddPendingPointsIn.parameters/customerId</from>
+                                        <to>$RemovePendingPointsIn.parameters/customertId</to>
+                                </copy>
+                                <copy>
+                                    <from>$AddPendingPointsIn.parameters/points</from>
+                                        <to>$RemovePendingPointsIn.parameters/points</to>
+                                </copy>
+                        </assign>
+                        <invoke name="removePoints" partnerLink="RewardService" operation="removePendingPoints" portType="ns6:RewardProvider" inputVariable="RemovePendingPointsIn" outputVariable="RemovePendingPointsOut"/>
+                </sequence>
+            </else>
+        </if>
     </sequence>
 </process>

@@ -19,6 +19,12 @@
         <part name="paymentDone" type="xsd:boolean"/>
         <part name="callList" type="ns0:findCallsToBill"/>
     </message>
+    <message name="clientPayOK">
+        <part name="id" type="xsd:long"/>
+        <part name="month" type="xsd:gMonth"/>
+        <part name="year" type="xsd:gYear"/>
+        <part name="ok" type="xsd:boolean"/>
+    </message>
     <portType name="ClientPortType">
         <operation name="ClientOperation">
             <input name="input1" message="tns:ClientOperationRequest"/>
