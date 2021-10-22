@@ -11,8 +11,8 @@
     </types>
     <message name="ClientOperationRequest">
         <part name="id" type="xsd:long"/>
-        <part name="month" type="xsd:gMonth"/>
-        <part name="year" type="xsd:gYear"/>
+        <part name="month" type="xsd:byte"/>
+        <part name="year" type="xsd:int"/>
     </message>
     <message name="ClientOperationResponse">
         <part name="idAndTotalBill" type="ns:createAndSendBillResponse"/>

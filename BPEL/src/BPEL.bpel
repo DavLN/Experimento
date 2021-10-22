@@ -62,16 +62,8 @@
         <receive name="receiveClientData" createInstance="yes" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" portType="tns:ClientPortType" variable="clientData"/>
         <assign name="AssignFindCallsToBillData">
             <copy>
-                <from>;0</from>
-                <to partnerLink="RatingService"/>
-            </copy>
-            <copy>
                 <from>''</from>
                 <to>$CallList.parameters/return</to>
-            </copy>
-            <copy>
-                <from>1</from>
-                <to variable="index"/>
             </copy>
             <copy>
                 <from variable="clientData" part="id"/>
@@ -84,6 +76,14 @@
             <copy>
                 <from variable="clientData" part="year"/>
                 <to>$getCallsIn.parameters/year</to>
+            </copy>
+            <copy>
+                <from>1</from>
+                <to variable="index"/>
+            </copy>
+            <copy>
+                <from>1</from>
+                <to variable="CostListIndex"/>
             </copy>
         </assign>
         <invoke name="GetCallInfoFromTelco" partnerLink="TelcoService" operation="findCallsToBill" xmlns:tns="http://rs.udc.es/telco" portType="tns:TelcoProvider" inputVariable="getCallsIn" outputVariable="CallList"/>
@@ -141,9 +141,17 @@
                                 </from>
                                 <to>$GetPhoneCallPriceIn.parameters/phoneCall/startDate</to>
                             </copy>
+                            <copy>
+                                <from>1 + $CostListIndex</from>
+                                <to variable="CostListIndex"/>
+                            </copy>
                         </assign>
                         <invoke name="getCostOfCall" partnerLink="RatingService" operation="getPhoneCallPrice" portType="ns1:RatingProvider" inputVariable="GetPhoneCallPriceIn" outputVariable="GetPhoneCallPriceOut"/>
                         <assign name="Assign2">
+                            <copy>
+                                <from>1 + $CostListIndex</from>
+                                <to variable="CostListIndex"/>
+                            </copy>
                             <copy>
                                 <from>$GetPhoneCallPriceOut.parameters/return</from>
                                 <to>$CostList.parameters/priced-call[$CostListIndex]/price
@@ -152,17 +160,29 @@
                                     </sxed:editor>
                                 </to>
                             </copy>
-                            <copy>
-                                <from>1 + $CostListIndex</from>
-                                <to variable="CostListIndex"/>
-                            </copy>
                         </assign>
                     </sequence>
                 </scope>
             </forEach>
-            <invoke name="getDiscount" partnerLink="RatingService" operation="getDiscount" portType="ns1:RatingProvider" inputVariable="GetDiscountIn" outputVariable="GetDiscountOut"/>
+            <sequence name="FlowSequence1">
+                <assign name="Assign6">
+                    <copy>
+                        <from variable="clientData" part="id"/>
+                        <to>$GetDiscountIn.parameters/customerId</to>
+                    </copy>
+                    <copy>
+                        <from variable="clientData" part="month"/>
+                        <to>$GetDiscountIn.parameters/month</to>
+                    </copy>
+                    <copy>
+                        <from variable="clientData" part="year"/>
+                        <to>$GetDiscountIn.parameters/year</to>
+                    </copy>
+                </assign>
+                <invoke name="getDiscount" partnerLink="RatingService" operation="getDiscount" portType="ns1:RatingProvider" inputVariable="GetDiscountIn" outputVariable="GetDiscountOut"/>
+            </sequence>
         </flow>
-        <assign name="AssignBillingDataNOTFINISHED">
+        <assign name="AssignBillingData">
             <copy>
                 <from variable="clientData" part="id"/>
                 <to>$CreateAndSendBillIn.parameters/customerId</to>
@@ -178,6 +198,10 @@
             <copy>
                 <from>$GetDiscountOut.parameters/return</from>
                 <to>$CreateAndSendBillIn.parameters/discount</to>
+            </copy>
+            <copy>
+                <from>$CostList.parameters/priced-call</from>
+                <to>$CreateAndSendBillIn.parameters/priced-call</to>
             </copy>
         </assign>
         <invoke name="getTotalImportOfBill" partnerLink="BillingService" operation="createAndSendBill" xmlns:tns="http://rs.udc.es/billing" portType="tns:BillingProvider" inputVariable="CreateAndSendBillIn" outputVariable="CreateAndSendBillOut"/>
@@ -276,5 +300,6 @@
                 </sequence>
             </else>
         </if>
+        <reply name="Reply1" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientOperation" portType="ns0:ClientPortType" variable="ClientOperationOut"/>
     </sequence>
 </process>
