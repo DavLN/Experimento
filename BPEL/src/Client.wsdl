@@ -29,13 +29,13 @@
         <part name="year" type="xsd:int"/>
     </message>
     <portType name="ClientPortTypeMain">
-        <operation name="ClientAskBillOperation">
-            <input name="input1" message="tns:clientPayOK"/>
-            <output name="output1" message="tns:ClientOperationResponseBillInfo"/>
+        <operation name="ClientConfirmBillOperation">
+            <input name="input1" message="tns:ClientOperationResponseBillInfo"/>
+            <output name="output1" message="tns:ClientOperationResponse"/>
         </operation>
-        <operation name="ClientMainOperation">
+        <operation name="ClientStartOperation">
             <input name="input2" message="tns:ClientOperationRequestData"/>
-            <output name="output2" message="tns:ClientOperationResponse"/>
+            <output name="output2" message="tns:clientPayOK"/>
         </operation>
     </portType>
     <plnk:partnerLinkType name="ClientMain">

@@ -60,7 +60,7 @@
         <variable name="ClientOperationIn" messageType="ns0:ClientOperationRequestData"/>
     </variables>
     <sequence>
-        <receive name="receiveClientData" createInstance="yes" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientMainOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" portType="tns:ClientPortTypeMain" variable="clientData"/>
+        <receive name="receiveClientData" createInstance="yes" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" portType="tns:ClientPortTypeMain" variable="clientData"/>
         <assign name="AssignFindCallsToBillData">
             <copy>
                 <from>''</from>
@@ -216,9 +216,9 @@
                 <to>$ClientAskBillOperationOut.billAmount/return</to>
             </copy>
         </assign>
-        <reply name="Reply2" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientAskBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientAskBillOperationOut"/>
+        <reply name="Reply2" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="ClientAskBillOperationOut"/>
         <!--<pick name="Pick1">
-            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientMainOperation" portType="ns0:ClientPortTypeMain" variable="BillReceivedNotification"></onMessage>
+            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="BillReceivedNotification"></onMessage>
         </pick>
         <assign name="AssingBilled">
             <copy>
