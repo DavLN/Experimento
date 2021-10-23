@@ -9,7 +9,7 @@
             <xsd:import namespace="http://rs.udc.es/telco" schemaLocation="TelcoService_schema.xsd"/>
         </xsd:schema>
     </types>
-    <message name="ClientOperationRequest">
+    <message name="ClientOperationRequestData">
         <part name="id" type="xsd:long"/>
         <part name="month" type="xsd:byte"/>
         <part name="year" type="xsd:int"/>
@@ -21,20 +21,27 @@
     </message>
     <message name="clientPayOK">
         <part name="id" type="xsd:long"/>
-        <part name="month" type="xsd:gMonth"/>
-        <part name="year" type="xsd:gYear"/>
-        <part name="ok" type="xsd:boolean"/>
+        <part name="billAmount" type="ns:createAndSendBillResponse"/>
     </message>
-    <portType name="ClientPortType">
-        <operation name="ClientOperation">
-            <input name="input1" message="tns:ClientOperationRequest"/>
-            <output name="output1" message="tns:ClientOperationResponse"/>
+    <message name="ClientOperationResponseBillInfo">
+        <part name="id" type="xsd:long"/>
+        <part name="month" type="xsd:byte"/>
+        <part name="year" type="xsd:int"/>
+    </message>
+    <portType name="ClientPortTypeMain">
+        <operation name="ClientAskBillOperation">
+            <input name="input1" message="tns:clientPayOK"/>
+            <output name="output1" message="tns:ClientOperationResponseBillInfo"/>
+        </operation>
+        <operation name="ClientMainOperation">
+            <input name="input2" message="tns:ClientOperationRequestData"/>
+            <output name="output2" message="tns:ClientOperationResponse"/>
         </operation>
     </portType>
-    <plnk:partnerLinkType name="Client">
+    <plnk:partnerLinkType name="ClientMain">
         <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
 In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
 A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
-        <plnk:role name="ClientPortTypeRole" portType="tns:ClientPortType"/>
+        <plnk:role name="ClientPortTypeRole" portType="tns:ClientPortTypeMain"/>
     </plnk:partnerLinkType>
 </definitions>
