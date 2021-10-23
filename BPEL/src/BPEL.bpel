@@ -29,6 +29,8 @@
         <partnerLink name="TelcoService" xmlns:tns="http://enterprise.netbeans.org/bpel/TelcoServiceWrapper" partnerLinkType="tns:TelcoProviderLinkType" partnerRole="TelcoProviderRole"/>
     </partnerLinks>
     <variables>
+        <variable name="ClientConfirmBillOperationOut" messageType="ns0:ClientOperationResponse"/>
+        <variable name="ClientConfirmBillOperationIn" messageType="ns0:ClientOperationResponseBillInfo"/>
         <variable name="ClientAskBillOperationOut" messageType="ns0:clientPayOK"/>
         <variable name="payOk" messageType="ns0:ClientOperationRequestData"/>
         <variable name="ClientOperationOut" messageType="ns0:ClientOperationResponse"/>
@@ -216,7 +218,8 @@
                 <to>$ClientAskBillOperationOut.billAmount/return</to>
             </copy>
         </assign>
-        <reply name="Reply2" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="ClientAskBillOperationOut"/>
+        <reply name="Reply2" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="ClientAskBillOperationOut"/> 
+
         <!--<pick name="Pick1">
             <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="BillReceivedNotification"></onMessage>
         </pick>
@@ -313,5 +316,41 @@
             </else>
         </if>
         <reply name="Reply1" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientMainOperation" portType="ns0:ClientPortTypeMain" variable="ClientOperationOut"/>-->
+        <pick name="Pick1">
+            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationIn">
+                <sequence name="Sequence3">
+                    <assign name="Assign8">
+                            <copy>
+                                    <from variable="ClientConfirmBillOperationIn" part="id"/>
+                                        <to>$ChangeStatusIn.parameters/customerId</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ClientConfirmBillOperationIn" part="month"/>
+                                        <to>$ChangeStatusIn.parameters/month</to>
+                                </copy>
+                                <copy>
+                                    <from variable="ClientConfirmBillOperationIn" part="year"/>
+                                        <to>$ChangeStatusIn.parameters/year</to>
+                                </copy>
+                                <copy>
+                                    <from>'BILLED'</from>
+                                        <to>$ChangeStatusIn.parameters/newPhoneCallStatus</to>
+                                </copy>
+                        </assign>
+                        <invoke name="BillChangeState" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn" outputVariable="ChangeStatusOut"/>
+                </sequence>
+            </onMessage>
+        </pick>
+        <assign name="Assign9">
+            <copy>
+                    <from>1</from>
+                        <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/billId</to>
+                </copy>
+                <copy>
+                    <from>1.0</from>
+                        <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/amount</to>
+                </copy>
+        </assign>
+        <reply name="Reply3" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationOut"/>
     </sequence>
 </process>
