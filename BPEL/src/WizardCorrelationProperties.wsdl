@@ -10,4 +10,5 @@
     <vprop:property name="wzrd_prop_clientId_long" type="xsd:long"/>
     <vprop:propertyAlias propertyName="tns:wzrd_prop_clientId_long" messageType="ns:ClientOperationRequestData" part="id"/>
     <vprop:propertyAlias propertyName="tns:wzrd_prop_clientId_long" messageType="ns:ClientOperationResponseBillInfo" part="id"/>
+    <vprop:propertyAlias propertyName="tns:wzrd_prop_clientId_long" messageType="ns:ClientOperationPayment" part="id"/>
 </definitions>

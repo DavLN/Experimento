@@ -30,6 +30,8 @@
         <partnerLink name="TelcoService" xmlns:tns="http://enterprise.netbeans.org/bpel/TelcoServiceWrapper" partnerLinkType="tns:TelcoProviderLinkType" partnerRole="TelcoProviderRole"/>
     </partnerLinks>
     <variables>
+        <variable name="ClientPaymentOperationOut" messageType="ns0:ClientOperationResponse"/>
+        <variable name="ClientPaymentOperationIn" messageType="ns0:ClientOperationPayment"/>
         <variable name="ClientConfirmBillOperationOut" messageType="ns0:ClientOperationResponse"/>
         <variable name="ClientConfirmBillOperationIn" messageType="ns0:ClientOperationResponseBillInfo"/>
         <variable name="ClientAskBillOperationOut" messageType="ns0:clientPayOK"/>
@@ -348,36 +350,68 @@
                                         <to>$ChangeStatusIn.parameters/newPhoneCallStatus</to>
                                 </copy>
                         </assign>
-                        <invoke name="BillChangeState" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn" outputVariable="ChangeStatusOut"/>
+                    <invoke name="Invoke2" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn" outputVariable="ChangeStatusOut"/>
                 </sequence>
             </onMessage>
         </pick>
-        <assign name="Assign9">
-                <copy>
-                    <from>1</from>
-                    <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/amount</to>
-                </copy>
+        <assign name="Assign9DistinguirCasoIMPAGO">
             <copy>
-                <from>1</from>
+                <from>'False'</from>
+                <to variable="ClientConfirmBillOperationOut" part="paymentDone"/>
+            </copy>
+            <copy>
+                <from variable="ClientConfirmBillOperationIn" part="id"/>
+                <to>$AddPendingPointsIn.parameters/customerId</to>
+            </copy>
+            <copy>
+                <from>round($CreateAndSendBillOut.parameters/return/amount div 10)</from>
+                <to>$AddPendingPointsIn.parameters/points</to>
+            </copy>
+            <copy>
+                <from>$CreateAndSendBillOut.parameters/return/amount</from>
+                <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/amount</to>
+            </copy>
+            <copy>
+                <from>$CreateAndSendBillOut.parameters/return/billId</from>
                 <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/billId</to>
             </copy>
             <copy>
-                <from variable="clientData" part="id"/>
-                <to>$ClientConfirmBillOperationOut.callList/customerId</to>
-            </copy>
-            <copy>
-                <from variable="clientData" part="month"/>
-                <to>$ClientConfirmBillOperationOut.callList/month</to>
-            </copy>
-            <copy>
-                <from variable="clientData" part="year"/>
-                <to>$ClientConfirmBillOperationOut.callList/year</to>
-            </copy>
-            <copy>
-                <from>'True'</from>
-                <to variable="ClientConfirmBillOperationOut" part="paymentDone"/>
+                <from>$CallList.parameters/return</from>
+                <to>$ClientConfirmBillOperationOut.callList/return</to>
             </copy>
         </assign>
-        <reply name="Reply3" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationOut"/>
+        <reply name="Reply3EXCLUSIVOdeDEBUG" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationOut"/>
+        <invoke name="Invoke1" partnerLink="RewardService" operation="addPendingPoints" portType="ns6:RewardProvider" inputVariable="AddPendingPointsIn" outputVariable="AddPendingPointsOut"/>
+        <pick name="Pick2">
+            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientPaymentOperation" portType="ns0:ClientPortTypeMain" variable="ClientPaymentOperationIn">
+                <correlations>
+                    <correlation set="CorrelationSet1" initiate="no"/>
+                </correlations>
+                <if name="paymentDone">
+                    <condition>$ClientPaymentOperationIn.succesfulPayment</condition>
+                    <sequence name="True">
+                        <assign name="Assign9">
+                            <copy>
+                                <from variable="ClientPaymentOperationIn" part="succesfulPayment"/>
+                                <to variable="ClientPaymentOperationOut" part="paymentDone"/>
+                            </copy>
+                            <copy>
+                                <from>$CreateAndSendBillOut.parameters/return/amount - $GetDiscountOut.parameters/return</from>
+                                <to>$ClientPaymentOperationOut.idAndTotalBill/return/amount</to>
+                            </copy>
+                            <copy>
+                                <from>$CreateAndSendBillOut.parameters/return/billId</from>
+                                <to>$ClientPaymentOperationOut.idAndTotalBill/return/billId</to>
+                            </copy>
+                            <copy>
+                                <from>$CallList.parameters/return</from>
+                                <to>$ClientPaymentOperationOut.callList/return</to>
+                            </copy>
+                        </assign>
+                        <reply name="Reply3" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientPaymentOperation" portType="ns0:ClientPortTypeMain" variable="ClientPaymentOperationOut"/>
+                    </sequence>
+                </if>
+            </onMessage>
+        </pick>
     </sequence>
 </process>

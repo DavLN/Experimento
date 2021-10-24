@@ -17,7 +17,7 @@
     <message name="ClientOperationResponse">
         <part name="idAndTotalBill" type="ns:createAndSendBillResponse"/>
         <part name="paymentDone" type="xsd:boolean"/>
-        <part name="callList" type="ns0:findCallsToBill"/>
+        <part name="callList" type="ns0:findCallsToBillResponse"/>
     </message>
     <message name="clientPayOK">
         <part name="id" type="xsd:long"/>
@@ -28,6 +28,12 @@
         <part name="month" type="xsd:byte"/>
         <part name="year" type="xsd:int"/>
     </message>
+    <message name="ClientOperationPayment">
+        <part name="id" type="xsd:long"/>
+        <part name="month" type="xsd:byte"/>
+        <part name="year" type="xsd:int"/>
+        <part name="succesfulPayment" type="xsd:boolean"/>
+    </message>
     <portType name="ClientPortTypeMain">
         <operation name="ClientConfirmBillOperation">
             <input name="input1" message="tns:ClientOperationResponseBillInfo"/>
@@ -36,6 +42,10 @@
         <operation name="ClientStartOperation">
             <input name="input2" message="tns:ClientOperationRequestData"/>
             <output name="output2" message="tns:clientPayOK"/>
+        </operation>
+        <operation name="ClientPaymentOperation">
+            <input name="input3" message="tns:ClientOperationPayment"/>
+            <output name="output3" message="tns:ClientOperationResponse"/>
         </operation>
     </portType>
     <plnk:partnerLinkType name="ClientMain">
