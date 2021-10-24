@@ -30,6 +30,8 @@
         <partnerLink name="TelcoService" xmlns:tns="http://enterprise.netbeans.org/bpel/TelcoServiceWrapper" partnerLinkType="tns:TelcoProviderLinkType" partnerRole="TelcoProviderRole"/>
     </partnerLinks>
     <variables>
+        <variable name="Discount" type="xs:double"/>
+        <variable name="RatingExceptionFaultVar" messageType="ns0:ExceptionMessage"/>
         <variable name="ConfirmPendingPointsOut" messageType="ns6:confirmPendingPointsResponse"/>
         <variable name="ConfirmPendingPointsIn" messageType="ns6:confirmPendingPoints"/>
         <variable name="ChangeStatusInPaid" messageType="ns3:changeStatus"/>
@@ -101,6 +103,10 @@
             <copy>
                 <from>1</from>
                 <to variable="CostListIndex"/>
+            </copy>
+            <copy>
+                <from>0</from>
+                <to variable="Discount"/>
             </copy>
         </assign>
         <invoke name="GetCallInfoFromTelco" partnerLink="TelcoService" operation="findCallsToBill" xmlns:tns="http://rs.udc.es/telco" portType="tns:TelcoProvider" inputVariable="getCallsIn" outputVariable="CallList"/>
@@ -182,21 +188,36 @@
                 </scope>
             </forEach>
             <sequence name="FlowSequence1">
-                <assign name="Assign6">
-                    <copy>
-                        <from variable="clientData" part="id"/>
-                        <to>$GetDiscountIn.parameters/customerId</to>
-                    </copy>
-                    <copy>
-                        <from variable="clientData" part="month"/>
-                        <to>$GetDiscountIn.parameters/month</to>
-                    </copy>
-                    <copy>
-                        <from variable="clientData" part="year"/>
-                        <to>$GetDiscountIn.parameters/year</to>
-                    </copy>
-                </assign>
-                <invoke name="getDiscount" partnerLink="RatingService" operation="getDiscount" portType="ns1:RatingProvider" inputVariable="GetDiscountIn" outputVariable="GetDiscountOut"/>
+                <scope name="Scope2">
+                    <faultHandlers>
+                        <catchAll>
+                            <empty name="Empty1"/>
+                        </catchAll>
+                    </faultHandlers>
+                    <sequence name="Sequence4">
+                        <assign name="Assign6">
+                            <copy>
+                                <from variable="clientData" part="id"/>
+                                    <to>$GetDiscountIn.parameters/customerId</to>
+                            </copy>
+                                <copy>
+                                <from variable="clientData" part="month"/>
+                                    <to>$GetDiscountIn.parameters/month</to>
+                            </copy>
+                                <copy>
+                                <from variable="clientData" part="year"/>
+                                    <to>$GetDiscountIn.parameters/year</to>
+                            </copy>
+                        </assign>
+                        <invoke name="getDiscount" partnerLink="RatingService" operation="getDiscount" portType="ns1:RatingProvider" inputVariable="GetDiscountIn" outputVariable="GetDiscountOut"/>
+                        <assign name="Assign10">
+                            <copy>
+                                <from>$GetDiscountOut.parameters/return</from>
+                                <to variable="Discount"/>
+                            </copy>
+                        </assign>
+                    </sequence>
+                </scope>
             </sequence>
         </flow>
         <assign name="AssignBillingData">
@@ -213,12 +234,12 @@
                 <to>$CreateAndSendBillIn.parameters/year</to>
             </copy>
             <copy>
-                <from>$GetDiscountOut.parameters/return</from>
-                <to>$CreateAndSendBillIn.parameters/discount</to>
-            </copy>
-            <copy>
                 <from>$CostList.parameters/priced-call</from>
                 <to>$CreateAndSendBillIn.parameters/priced-call</to>
+            </copy>
+            <copy>
+                <from variable="Discount"/>
+                <to>$CreateAndSendBillIn.parameters/discount</to>
             </copy>
         </assign>
         <invoke name="getTotalImportOfBill" partnerLink="BillingService" operation="createAndSendBill" xmlns:tns="http://rs.udc.es/billing" portType="tns:BillingProvider" inputVariable="CreateAndSendBillIn" outputVariable="CreateAndSendBillOut"/>
@@ -448,8 +469,8 @@
                         <to variable="ClientPaymentOperationOut" part="paymentDone"/>
                 </copy>
                 <copy>
-                    <from>$CreateAndSendBillOut.parameters/return/amount - $GetDiscountOut.parameters/return</from>
-                        <to>$ClientPaymentOperationOut.idAndTotalBill/return/amount</to>
+                    <from>$CreateAndSendBillOut.parameters/return/amount - $Discount</from>
+                    <to>$ClientPaymentOperationOut.idAndTotalBill/return/amount</to>
                 </copy>
                 <copy>
                     <from>$CreateAndSendBillOut.parameters/return/billId</from>

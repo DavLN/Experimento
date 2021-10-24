@@ -34,6 +34,9 @@
         <part name="year" type="xsd:int"/>
         <part name="succesfulPayment" type="xsd:boolean"/>
     </message>
+    <message name="ExceptionMessage">
+        <part name="FaultMessage" type="xsd:string"/>
+    </message>
     <portType name="ClientPortTypeMain">
         <operation name="ClientConfirmBillOperation">
             <input name="input1" message="tns:ClientOperationResponseBillInfo"/>
@@ -42,6 +45,7 @@
         <operation name="ClientStartOperation">
             <input name="input2" message="tns:ClientOperationRequestData"/>
             <output name="output2" message="tns:clientPayOK"/>
+            <fault name="RatingException" message="tns:ExceptionMessage"/>
         </operation>
         <operation name="ClientPaymentOperation">
             <input name="input3" message="tns:ClientOperationPayment"/>
