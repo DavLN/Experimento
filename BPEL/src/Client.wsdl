@@ -45,7 +45,6 @@
         <operation name="ClientStartOperation">
             <input name="input2" message="tns:ClientOperationRequestData"/>
             <output name="output2" message="tns:clientPayOK"/>
-            <fault name="RatingException" message="tns:ExceptionMessage"/>
         </operation>
         <operation name="ClientPaymentOperation">
             <input name="input3" message="tns:ClientOperationPayment"/>

@@ -435,54 +435,65 @@
                                 </sequence>
                             </catch>
                         </faultHandlers>
-                        <if name="paymentDone">
-                            <condition>$ClientPaymentOperationIn.succesfulPayment</condition>
-                                <sequence name="True">
-                                <assign name="AssignPaidAndPoints">
-                                        <copy>
-                                                <from variable="clientData" part="id"/>
-                                                    <to>$ChangeStatusInPaid.parameters/customerId</to>
-                                            </copy>
-                                            <copy>
-                                                <from variable="clientData" part="month"/>
-                                                    <to>$ChangeStatusInPaid.parameters/month</to>
-                                            </copy>
-                                            <copy>
-                                                <from variable="clientData" part="year"/>
-                                                    <to>$ChangeStatusInPaid.parameters/year</to>
-                                            </copy>
-                                            <copy>
-                                                <from>'PAID'</from>
-                                                    <to>$ChangeStatusInPaid.parameters/newPhoneCallStatus</to>
-                                            </copy>
-                                            <copy>
-                                                <from>$AddPendingPointsIn.parameters/points</from>
-                                                    <to>$ConfirmPendingPointsIn.parameters/points</to>
-                                            </copy>
-                                            <copy>
-                                                <from>$AddPendingPointsIn.parameters/customerId</from>
-                                                    <to>$ConfirmPendingPointsIn.parameters/customerId</to>
-                                            </copy>
-                                    </assign>
-                                    <invoke name="ChangeStatusToPaid" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusInPaid" outputVariable="ChangeStatusOut"/>
-                                    <invoke name="ConfirmPendingPoints" partnerLink="RewardService" operation="confirmPendingPoints" portType="ns6:RewardProvider" inputVariable="ConfirmPendingPointsIn" outputVariable="ConfirmPendingPointsOut"/>
-                            </sequence>
-                                <else>
-                                <sequence name="False">
-                                        <assign name="AssignPointsToBeRemoved">
+                        <sequence name="Sequence10">
+                            <if name="If1">
+                                <condition>'' = $AddPendingPointsIn.parameters/points</condition>
+                                <assign name="Assign11">
+                                    <copy>
+                                        <from>0</from>
+                                        <to>$AddPendingPointsIn.parameters/points</to>
+                                    </copy>
+                                </assign>
+                            </if>
+                            <if name="paymentDone">
+                                <condition>$ClientPaymentOperationIn.succesfulPayment</condition>
+                                    <sequence name="True">
+                                        <assign name="AssignPaidAndPoints">
                                                 <copy>
-                                                        <from>$AddPendingPointsIn.parameters/customerId</from>
-                                                            <to>$RemovePendingPointsIn.parameters/customertId</to>
+                                                        <from variable="clientData" part="id"/>
+                                                            <to>$ChangeStatusInPaid.parameters/customerId</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from variable="clientData" part="month"/>
+                                                            <to>$ChangeStatusInPaid.parameters/month</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from variable="clientData" part="year"/>
+                                                            <to>$ChangeStatusInPaid.parameters/year</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>'PAID'</from>
+                                                            <to>$ChangeStatusInPaid.parameters/newPhoneCallStatus</to>
                                                     </copy>
                                                     <copy>
                                                         <from>$AddPendingPointsIn.parameters/points</from>
-                                                            <to>$RemovePendingPointsIn.parameters/points</to>
+                                                            <to>$ConfirmPendingPointsIn.parameters/points</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>$AddPendingPointsIn.parameters/customerId</from>
+                                                            <to>$ConfirmPendingPointsIn.parameters/customerId</to>
                                                     </copy>
                                             </assign>
-                                            <invoke name="RemovePendingPoints" partnerLink="RewardService" operation="removePendingPoints" portType="ns6:RewardProvider" outputVariable="RemovePendingPointsOut" inputVariable="RemovePendingPointsIn"/>
+                                            <invoke name="ChangeStatusToPaid" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusInPaid" outputVariable="ChangeStatusOut"/>
+                                            <invoke name="ConfirmPendingPoints" partnerLink="RewardService" operation="confirmPendingPoints" portType="ns6:RewardProvider" inputVariable="ConfirmPendingPointsIn" outputVariable="ConfirmPendingPointsOut"/>
                                     </sequence>
-                            </else>
-                        </if>
+                                    <else>
+                                        <sequence name="False">
+                                                <assign name="AssignPointsToBeRemoved">
+                                                        <copy>
+                                                                <from>$AddPendingPointsIn.parameters/customerId</from>
+                                                                    <to>$RemovePendingPointsIn.parameters/customertId</to>
+                                                            </copy>
+                                                            <copy>
+                                                                <from>$AddPendingPointsIn.parameters/points</from>
+                                                                    <to>$RemovePendingPointsIn.parameters/points</to>
+                                                            </copy>
+                                                    </assign>
+                                                    <invoke name="RemovePendingPoints" partnerLink="RewardService" operation="removePendingPoints" portType="ns6:RewardProvider" outputVariable="RemovePendingPointsOut" inputVariable="RemovePendingPointsIn"/>
+                                            </sequence>
+                                    </else>
+                            </if>
+                        </sequence>
                     </scope>
                 </sequence>
             </onMessage>
