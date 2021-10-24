@@ -108,6 +108,10 @@
                 <from>0</from>
                 <to variable="Discount"/>
             </copy>
+            <copy>
+                <from>''</from>
+                <to>$CostList.parameters/priced-call</to>
+            </copy>
         </assign>
         <invoke name="GetCallInfoFromTelco" partnerLink="TelcoService" operation="findCallsToBill" xmlns:tns="http://rs.udc.es/telco" portType="tns:TelcoProvider" inputVariable="getCallsIn" outputVariable="CallList"/>
         <flow name="Flow1">
@@ -253,7 +257,7 @@
                 <to>$ClientAskBillOperationOut.billAmount/return</to>
             </copy>
         </assign>
-        <reply name="Reply2" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="ClientAskBillOperationOut"/> 
+        <reply name="ReplyAmountBillId" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="ClientAskBillOperationOut"/> 
 
         <!--<pick name="Pick1">
             <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="BillReceivedNotification"></onMessage>
@@ -356,31 +360,43 @@
                 <correlations>
                     <correlation set="CorrelationSet1" initiate="no"/>
                 </correlations>
-                <sequence name="Sequence3">
-                    <assign name="Assign8">
-                            <copy>
+                <sequence name="Sequence5">
+                    <scope name="Scope3">
+                        <faultHandlers>
+                            <catch faultName="ns3:TelcoException" faultVariable="TelcoException" faultMessageType="ns3:TelcoException">
+                                <sequence name="Sequence7">
+                                    <reply name="ReplyFault" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" faultName="ns3:TelcoException" variable="TelcoException"/>
+                                    <exit name="Exit1"/>
+                                </sequence>
+                            </catch>
+                        </faultHandlers>
+                        <sequence name="Sequence6">
+                            <assign name="AssignBilled">
+                                <copy>
                                     <from variable="ClientConfirmBillOperationIn" part="id"/>
                                         <to>$ChangeStatusIn.parameters/customerId</to>
                                 </copy>
-                                <copy>
+                                    <copy>
                                     <from variable="ClientConfirmBillOperationIn" part="month"/>
                                         <to>$ChangeStatusIn.parameters/month</to>
                                 </copy>
-                                <copy>
+                                    <copy>
                                     <from variable="ClientConfirmBillOperationIn" part="year"/>
                                         <to>$ChangeStatusIn.parameters/year</to>
                                 </copy>
-                                <copy>
+                                    <copy>
                                     <from>'BILLED'</from>
                                         <to>$ChangeStatusIn.parameters/newPhoneCallStatus</to>
                                 </copy>
-                        </assign>
-                    <invoke name="Invoke2" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn" outputVariable="ChangeStatusOut"/>
-                    <invoke name="GetCallsStatusChangedFromTelco" partnerLink="TelcoService" operation="findCallsToBill" portType="ns3:TelcoProvider" inputVariable="getCallsIn" outputVariable="CallListStatusChanged"/>
+                            </assign>
+                            <invoke name="ChangeStatus" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn" outputVariable="ChangeStatusOut"/>
+                            <invoke name="GetCallsStatusChangedFromTelco" partnerLink="TelcoService" operation="findCallsToBill" portType="ns3:TelcoProvider" inputVariable="getCallsIn" outputVariable="CallListStatusChanged"/>
+                        </sequence>
+                    </scope>
                 </sequence>
             </onMessage>
         </pick>
-        <assign name="Assign9DistinguirCasoIMPAGO">
+        <assign name="AssignBillInfo">
             <copy>
                 <from>'False'</from>
                 <to variable="ClientConfirmBillOperationOut" part="paymentDone"/>
@@ -401,66 +417,74 @@
                 <from>$CreateAndSendBillOut.parameters/return/billId</from>
                 <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/billId</to>
             </copy>
-            <copy>
-                <from>$CallList.parameters/return</from>
-                <to>$ClientConfirmBillOperationOut.callList/return</to>
-            </copy>
         </assign>
-        <reply name="Reply3EXCLUSIVOdeDEBUG" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationOut"/>
-        <invoke name="Invoke1" partnerLink="RewardService" operation="addPendingPoints" portType="ns6:RewardProvider" inputVariable="AddPendingPointsIn" outputVariable="AddPendingPointsOut"/>
+        <reply name="ReplyBilling" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationOut"/>
+        <invoke name="AddPendingPoints" partnerLink="RewardService" operation="addPendingPoints" portType="ns6:RewardProvider" inputVariable="AddPendingPointsIn" outputVariable="AddPendingPointsOut"/>
         <pick name="Pick2">
             <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientPaymentOperation" portType="ns0:ClientPortTypeMain" variable="ClientPaymentOperationIn">
                 <correlations>
                     <correlation set="CorrelationSet1" initiate="no"/>
                 </correlations>
-                <if name="paymentDone">
-                    <condition>$ClientPaymentOperationIn.succesfulPayment</condition>
-                    <sequence name="True">
-                        <assign name="AssignPaidAndPoints">
-                            <copy>
-                                <from variable="clientData" part="id"/>
-                                <to>$ChangeStatusInPaid.parameters/customerId</to>
-                            </copy>
-                            <copy>
-                                <from variable="clientData" part="month"/>
-                                <to>$ChangeStatusInPaid.parameters/month</to>
-                            </copy>
-                            <copy>
-                                <from variable="clientData" part="year"/>
-                                <to>$ChangeStatusInPaid.parameters/year</to>
-                            </copy>
-                            <copy>
-                                <from>'PAID'</from>
-                                <to>$ChangeStatusInPaid.parameters/newPhoneCallStatus</to>
-                            </copy>
-                            <copy>
-                                <from>$AddPendingPointsIn.parameters/points</from>
-                                <to>$ConfirmPendingPointsIn.parameters/points</to>
-                            </copy>
-                            <copy>
-                                <from>$AddPendingPointsIn.parameters/customerId</from>
-                                <to>$ConfirmPendingPointsIn.parameters/customerId</to>
-                            </copy>
-                        </assign>
-                        <invoke name="ChangeStatusToPaid" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusInPaid" outputVariable="ChangeStatusOut"/>
-                        <invoke name="ConfirmPendingPoints" partnerLink="RewardService" operation="confirmPendingPoints" portType="ns6:RewardProvider" inputVariable="ConfirmPendingPointsIn" outputVariable="ConfirmPendingPointsOut"/>
-                    </sequence>
-                    <else>
-                        <sequence name="False">
-                            <assign name="AssignPointsToBeRemoved">
-                                <copy>
-                                    <from>$AddPendingPointsIn.parameters/customerId</from>
-                                    <to>$RemovePendingPointsIn.parameters/customertId</to>
-                                </copy>
-                                <copy>
-                                    <from>$AddPendingPointsIn.parameters/points</from>
-                                    <to>$RemovePendingPointsIn.parameters/points</to>
-                                </copy>
-                            </assign>
-                            <invoke name="RemovePendingPoints" partnerLink="RewardService" operation="removePendingPoints" portType="ns6:RewardProvider" outputVariable="RemovePendingPointsOut" inputVariable="RemovePendingPointsIn"/>
-                        </sequence>
-                    </else>
-                </if>
+                <sequence name="Sequence8">
+                    <scope name="Scope4">
+                        <faultHandlers>
+                            <catch faultName="ns6:RewardException" faultVariable="RewardExceptionVar" faultMessageType="ns6:RewardException">
+                                <sequence name="Sequence9">
+                                    <reply name="ReplyRewardException" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientPaymentOperation" portType="ns0:ClientPortTypeMain" faultName="ns6:RewardException" variable="RewardExceptionVar"/>
+                                    <exit name="Exit2"/>
+                                </sequence>
+                            </catch>
+                        </faultHandlers>
+                        <if name="paymentDone">
+                            <condition>$ClientPaymentOperationIn.succesfulPayment</condition>
+                                <sequence name="True">
+                                <assign name="AssignPaidAndPoints">
+                                        <copy>
+                                                <from variable="clientData" part="id"/>
+                                                    <to>$ChangeStatusInPaid.parameters/customerId</to>
+                                            </copy>
+                                            <copy>
+                                                <from variable="clientData" part="month"/>
+                                                    <to>$ChangeStatusInPaid.parameters/month</to>
+                                            </copy>
+                                            <copy>
+                                                <from variable="clientData" part="year"/>
+                                                    <to>$ChangeStatusInPaid.parameters/year</to>
+                                            </copy>
+                                            <copy>
+                                                <from>'PAID'</from>
+                                                    <to>$ChangeStatusInPaid.parameters/newPhoneCallStatus</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$AddPendingPointsIn.parameters/points</from>
+                                                    <to>$ConfirmPendingPointsIn.parameters/points</to>
+                                            </copy>
+                                            <copy>
+                                                <from>$AddPendingPointsIn.parameters/customerId</from>
+                                                    <to>$ConfirmPendingPointsIn.parameters/customerId</to>
+                                            </copy>
+                                    </assign>
+                                    <invoke name="ChangeStatusToPaid" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusInPaid" outputVariable="ChangeStatusOut"/>
+                                    <invoke name="ConfirmPendingPoints" partnerLink="RewardService" operation="confirmPendingPoints" portType="ns6:RewardProvider" inputVariable="ConfirmPendingPointsIn" outputVariable="ConfirmPendingPointsOut"/>
+                            </sequence>
+                                <else>
+                                <sequence name="False">
+                                        <assign name="AssignPointsToBeRemoved">
+                                                <copy>
+                                                        <from>$AddPendingPointsIn.parameters/customerId</from>
+                                                            <to>$RemovePendingPointsIn.parameters/customertId</to>
+                                                    </copy>
+                                                    <copy>
+                                                        <from>$AddPendingPointsIn.parameters/points</from>
+                                                            <to>$RemovePendingPointsIn.parameters/points</to>
+                                                    </copy>
+                                            </assign>
+                                            <invoke name="RemovePendingPoints" partnerLink="RewardService" operation="removePendingPoints" portType="ns6:RewardProvider" outputVariable="RemovePendingPointsOut" inputVariable="RemovePendingPointsIn"/>
+                                    </sequence>
+                            </else>
+                        </if>
+                    </scope>
+                </sequence>
             </onMessage>
         </pick>
         <assign name="Assign9">
@@ -476,10 +500,26 @@
                     <from>$CreateAndSendBillOut.parameters/return/billId</from>
                         <to>$ClientPaymentOperationOut.idAndTotalBill/return/billId</to>
                 </copy>
-                <copy>
-                    <from>$CallListStatusChanged.parameters/return</from>
-                        <to>$ClientPaymentOperationOut.callList/return</to>
-                </copy>
+            <copy>
+                <from>$CostList.parameters/priced-call</from>
+                <to>$ClientPaymentOperationOut.callList/priced-call</to>
+            </copy>
+            <copy>
+                <from variable="ClientPaymentOperationIn" part="id"/>
+                <to>$ClientPaymentOperationOut.callList/customerId</to>
+            </copy>
+            <copy>
+                <from variable="ClientPaymentOperationIn" part="month"/>
+                <to>$ClientPaymentOperationOut.callList/month</to>
+            </copy>
+            <copy>
+                <from variable="ClientPaymentOperationIn" part="year"/>
+                <to>$ClientPaymentOperationOut.callList/year</to>
+            </copy>
+            <copy>
+                <from variable="Discount"/>
+                <to>$ClientPaymentOperationOut.callList/discount</to>
+            </copy>
         </assign>
         <reply name="Reply3" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientPaymentOperation" portType="ns0:ClientPortTypeMain" variable="ClientPaymentOperationOut"/>
     </sequence>

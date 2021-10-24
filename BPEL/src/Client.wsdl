@@ -17,7 +17,7 @@
     <message name="ClientOperationResponse">
         <part name="idAndTotalBill" type="ns:createAndSendBillResponse"/>
         <part name="paymentDone" type="xsd:boolean"/>
-        <part name="callList" type="ns0:findCallsToBillResponse"/>
+        <part name="callList" type="ns:createAndSendBill"/>
     </message>
     <message name="clientPayOK">
         <part name="id" type="xsd:long"/>
