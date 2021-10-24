@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="260a03bf-ea6d-4abf-acc6-902169b09b63" activeEnvironment="Default" name="consulta" resourceRoot="" soapui-version="5.5.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="3991aeb8-adb8-4d81-aa5b-68f3ef1f1841" wsaVersion="NONE" name="casaBinding1" type="wsdl" bindingName="{CompositeApp1}casaBinding1" soapVersion="1_1" anonymous="optional" definition="http://localhost:5050/CompositeApp1Service1/casaPort1?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1Service1/casaPort1</con:endpoint></con:endpoints><con:operation id="fae3eda4-21ac-4d2d-8a7c-ee902b861f18" isOneWay="false" action="" name="ClientConfirmBillOperation" bindingOperationName="ClientConfirmBillOperation" type="Request-Response" outputName="output1" inputName="input1" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bcc38e96-2f75-47b2-88d9-691fa9314789" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1Service1/casaPort1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="CompositeApp1">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <com:ClientConfirmBillOperation>\r
+         <id>2</id>\r
+         <month>9</month>\r
+         <year>2021</year>\r
+      </com:ClientConfirmBillOperation>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CompositeApp1/ClientPortTypeMain/input1"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="af4a0f0e-cd20-4bdb-92b6-98930f34e561" isOneWay="false" action="" name="ClientPaymentOperation" bindingOperationName="ClientPaymentOperation" type="Request-Response" outputName="output3" inputName="input3" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="89a30c27-dac4-453a-936e-77624ebf2f8c" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1Service1/casaPort1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="CompositeApp1">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <com:ClientPaymentOperation>\r
+         <id>2</id>\r
+         <month>9</month>\r
+         <year>2021</year>\r
+         <succesfulPayment>True</succesfulPayment>\r
+      </com:ClientPaymentOperation>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CompositeApp1/ClientPortTypeMain/input3"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="bbfb937e-1b42-4e50-a90c-f794a2618fe5" isOneWay="false" action="" name="ClientStartOperation" bindingOperationName="ClientStartOperation" type="Request-Response" outputName="output2" inputName="input2" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="ef33bd87-fe1d-4f0d-99f5-2066473cd349" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1Service1/casaPort1</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:com="CompositeApp1">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <com:ClientStartOperation>\r
+         <id>2</id>\r
+         <month>9</month>\r
+         <year>2021</year>\r
+      </com:ClientStartOperation>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="CompositeApp1/ClientPortTypeMain/input2"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="9eb0c35f-1a1d-4e37-8dd8-6c73b9658894" wsaVersion="NONE" name="casaBinding3" type="wsdl" bindingName="{CompositeApp1}casaBinding3" soapVersion="1_1" anonymous="optional" definition="http://localhost:5050/CompositeApp1Service1/casaPort1?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RewardService</con:endpoint></con:endpoints><con:operation id="ae785555-c363-45cf-a737-a82215e66582" isOneWay="false" action="" name="addPendingPoints" bindingOperationName="addPendingPoints" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d363c561-c104-48a6-bc14-dd810dee59fc" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RewardService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rew="http://rs.udc.es/reward">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <rew:addPendingPoints>\r
+         <!--Optional:-->\r
+         <customerId>?</customerId>\r
+         <points>?</points>\r
+      </rew:addPendingPoints>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/reward/RewardProvider/addPendingPointsRequest"/></con:call></con:operation><con:operation id="6a1a43dc-b862-48e9-b7bc-c41e6ee49bd8" isOneWay="false" action="" name="confirmPendingPoints" bindingOperationName="confirmPendingPoints" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="8dd40f70-c517-4364-adc8-06398d351e4d" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RewardService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rew="http://rs.udc.es/reward">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <rew:confirmPendingPoints>\r
+         <!--Optional:-->\r
+         <customerId>?</customerId>\r
+         <points>?</points>\r
+      </rew:confirmPendingPoints>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/reward/RewardProvider/confirmPendingPointsRequest"/></con:call></con:operation><con:operation id="13950d6d-ab03-48f9-b722-fbe3fde2f547" isOneWay="false" action="" name="getPendingPoints" bindingOperationName="getPendingPoints" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="49d6a2e3-caf7-4463-ad73-93ffc90f6af4" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RewardService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rew="http://rs.udc.es/reward">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <rew:getPendingPoints>\r
+         <!--Optional:-->\r
+         <customerId>2</customerId>\r
+      </rew:getPendingPoints>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/reward/RewardProvider/getPendingPointsRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="e0657f52-50ac-4cd2-b289-de3be1a404e9" isOneWay="false" action="" name="getPoints" bindingOperationName="getPoints" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="497ebf17-6c66-4314-a7ef-984475d05307" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RewardService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rew="http://rs.udc.es/reward">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <rew:getPoints>\r
+         <!--Optional:-->\r
+         <customerId>2</customerId>\r
+      </rew:getPoints>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/reward/RewardProvider/getPointsRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="3edb70f8-a8ea-4ff3-94df-006955540dd6" isOneWay="false" action="" name="removePendingPoints" bindingOperationName="removePendingPoints" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="759c8688-afe7-42b3-8986-1e4721b819e4" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RewardService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rew="http://rs.udc.es/reward">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <rew:removePendingPoints>\r
+         <!--Optional:-->\r
+         <customertId>?</customertId>\r
+         <points>?</points>\r
+      </rew:removePendingPoints>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/reward/RewardProvider/removePendingPointsRequest"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="b38c6b2b-f67b-4f30-aecb-c9f744fff5a5" wsaVersion="NONE" name="casaBinding2" type="wsdl" bindingName="{CompositeApp1}casaBinding2" soapVersion="1_1" anonymous="optional" definition="http://localhost:5050/CompositeApp1Service1/casaPort1?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/BillingService</con:endpoint></con:endpoints><con:operation id="13b564c5-4f7a-4864-9345-e6c5fc42848d" isOneWay="false" action="" name="createAndSendBill" bindingOperationName="createAndSendBill" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="46e790e5-9220-4799-8211-1bacddf3da49" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/BillingService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bil="http://rs.udc.es/billing">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <bil:createAndSendBill>\r
+         <!--Optional:-->\r
+         <customerId>?</customerId>\r
+         <month>?</month>\r
+         <year>?</year>\r
+         <!--Zero or more repetitions:-->\r
+         <priced-call>\r
+            <!--Optional:-->\r
+            <customerId>?</customerId>\r
+            <!--Optional:-->\r
+            <destinationNumber>?</destinationNumber>\r
+            <!--Optional:-->\r
+            <duration>?</duration>\r
+            <!--Optional:-->\r
+            <phoneCallId>?</phoneCallId>\r
+            <!--Optional:-->\r
+            <phoneCallType>?</phoneCallType>\r
+            <price>?</price>\r
+            <!--Optional:-->\r
+            <startDate>?</startDate>\r
+            <!--Optional:-->\r
+            <type>?</type>\r
+         </priced-call>\r
+         <discount>?</discount>\r
+      </bil:createAndSendBill>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/billing/BillingProvider/createAndSendBillRequest"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="6953c9d0-3530-4420-a8c4-9684e2e61990" wsaVersion="NONE" name="casaBinding5" type="wsdl" bindingName="{CompositeApp1}casaBinding5" soapVersion="1_1" anonymous="optional" definition="http://localhost:5050/CompositeApp1Service1/casaPort1?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/TelcoService</con:endpoint></con:endpoints><con:operation id="41086a09-fe21-42b8-a45a-a04f9a60a2fb" isOneWay="false" action="" name="changeStatus" bindingOperationName="changeStatus" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d07762cc-bbc5-4d3e-86ce-8c95bc3ddefe" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/TelcoService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tel="http://rs.udc.es/telco">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tel:changeStatus>\r
+         <!--Optional:-->\r
+         <customerId>?</customerId>\r
+         <!--Optional:-->\r
+         <month>?</month>\r
+         <!--Optional:-->\r
+         <year>?</year>\r
+         <!--Optional:-->\r
+         <newPhoneCallStatus>?</newPhoneCallStatus>\r
+      </tel:changeStatus>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/telco/TelcoProvider/changeStatusRequest"/></con:call></con:operation><con:operation id="f9215e4c-45ea-4491-a0ec-81c31e94707b" isOneWay="false" action="" name="findCallsToBill" bindingOperationName="findCallsToBill" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="61b4d6cb-cd70-4761-955e-9b0e1128e17f" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/TelcoService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tel="http://rs.udc.es/telco">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <tel:findCallsToBill>\r
+         <!--Optional:-->\r
+         <customerId>?</customerId>\r
+         <!--Optional:-->\r
+         <month>?</month>\r
+         <!--Optional:-->\r
+         <year>?</year>\r
+      </tel:findCallsToBill>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/telco/TelcoProvider/findCallsToBillRequest"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" id="b5d4abda-c956-42cd-9031-bbdf4c1d8e6a" wsaVersion="NONE" name="casaBinding4" type="wsdl" bindingName="{CompositeApp1}casaBinding4" soapVersion="1_1" anonymous="optional" definition="http://localhost:5050/CompositeApp1Service1/casaPort1?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:5050/CompositeApp1Service1/casaPort1?wsdl"><con:part><con:url>http://localhost:5050/CompositeApp1Service1/casaPort1?wsdl</con:url><con:content><![CDATA[<definitions targetNamespace="CompositeApp1" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" xmlns:tns="CompositeApp1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://rs.udc.es/rating" xmlns:ns1="http://rs.udc.es/billing" xmlns:ns4="http://rs.udc.es/telco" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns3="http://rs.udc.es/reward">
+  <import namespace="http://rs.udc.es/rating" location="http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/RatingService.wsdl"></import>
+  <import namespace="http://rs.udc.es/billing" location="http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/BillingService.wsdl"></import>
+  <import namespace="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" location="http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/Client.wsdl"></import>
+  <import namespace="http://rs.udc.es/telco" location="http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/TelcoService.wsdl"></import>
+  <import namespace="http://rs.udc.es/reward" location="http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/RewardService.wsdl"></import>
+  <portType name="dummyCasaPortType"></portType>
+  <binding name="casaBinding1" type="ns:ClientPortTypeMain">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="ClientConfirmBillOperation">
+      <soap:operation/>
+      <input name="input1">
+        <soap:body use="literal" namespace="CompositeApp1"/>
+      </input>
+      <output name="output1">
+        <soap:body use="literal" namespace="CompositeApp1"/>
+      </output>
+    </operation>
+    <operation name="ClientStartOperation">
+      <soap:operation/>
+      <input name="input2">
+        <soap:body use="literal" namespace="CompositeApp1"/>
+      </input>
+      <output name="output2">
+        <soap:body use="literal" namespace="CompositeApp1"/>
+      </output>
+    </operation>
+    <operation name="ClientPaymentOperation">
+      <soap:operation/>
+      <input name="input3">
+        <soap:body use="literal" namespace="CompositeApp1"/>
+      </input>
+      <output name="output3">
+        <soap:body use="literal" namespace="CompositeApp1"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="casaBinding2" type="ns1:BillingProvider">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="createAndSendBill">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <binding name="casaBinding3" type="ns3:RewardProvider">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getPoints">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="RewardException">
+        <soap:fault name="RewardException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getPendingPoints">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="RewardException">
+        <soap:fault name="RewardException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="addPendingPoints">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="RewardException">
+        <soap:fault name="RewardException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="confirmPendingPoints">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="RewardException">
+        <soap:fault name="RewardException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="removePendingPoints">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="RewardException">
+        <soap:fault name="RewardException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <binding name="casaBinding4" type="ns2:RatingProvider">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getDiscount">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="RatingException">
+        <soap:fault name="RatingException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="getPhoneCallPrice">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="RatingException">
+        <soap:fault name="RatingException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <binding name="casaBinding5" type="ns4:TelcoProvider">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="changeStatus">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="TelcoException">
+        <soap:fault name="TelcoException" use="literal"/>
+      </fault>
+    </operation>
+    <operation name="findCallsToBill">
+      <soap:operation/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+      <fault name="TelcoException">
+        <soap:fault name="TelcoException" use="literal"/>
+      </fault>
+    </operation>
+  </binding>
+  <service name="CompositeApp1Service1">
+    <port name="Client" binding="tns:casaBinding1">
+      <soap:address location="http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1Service1/casaPort1"/>
+    </port>
+  </service>
+  <service name="CompositeApp1Service3">
+    <port name="Reward" binding="tns:casaBinding3">
+      <soap:address location="http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RewardService"/>
+    </port>
+  </service>
+  <service name="CompositeApp1Service2">
+    <port name="Billing" binding="tns:casaBinding2">
+      <soap:address location="http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/BillingService"/>
+    </port>
+  </service>
+  <service name="CompositeApp1Service5">
+    <port name="Telco" binding="tns:casaBinding5">
+      <soap:address location="http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/TelcoService"/>
+    </port>
+  </service>
+  <service name="CompositeApp1Service4">
+    <port name="Rating" binding="tns:casaBinding4">
+      <soap:address location="http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RatingService"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/RatingService.wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<!--Generated by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<definitions targetNamespace="http://rs.udc.es/rating" name="RatingProviderService" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://rs.udc.es/rating" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://rs.udc.es/rating" schemaLocation="RatingService_schema.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="getDiscount">
+    <part name="parameters" element="tns:getDiscount"/>
+  </message>
+  <message name="getDiscountResponse">
+    <part name="parameters" element="tns:getDiscountResponse"/>
+  </message>
+  <message name="RatingException">
+    <part name="fault" element="tns:RatingException"/>
+  </message>
+  <message name="getPhoneCallPrice">
+    <part name="parameters" element="tns:getPhoneCallPrice"/>
+  </message>
+  <message name="getPhoneCallPriceResponse">
+    <part name="parameters" element="tns:getPhoneCallPriceResponse"/>
+  </message>
+  <portType name="RatingProvider">
+    <operation name="getDiscount">
+      <input wsam:Action="http://rs.udc.es/rating/RatingProvider/getDiscountRequest" message="tns:getDiscount"/>
+      <output wsam:Action="http://rs.udc.es/rating/RatingProvider/getDiscountResponse" message="tns:getDiscountResponse"/>
+      <fault message="tns:RatingException" name="RatingException" wsam:Action="http://rs.udc.es/rating/RatingProvider/getDiscount/Fault/RatingException"/>
+    </operation>
+    <operation name="getPhoneCallPrice">
+      <input wsam:Action="http://rs.udc.es/rating/RatingProvider/getPhoneCallPriceRequest" message="tns:getPhoneCallPrice"/>
+      <output wsam:Action="http://rs.udc.es/rating/RatingProvider/getPhoneCallPriceResponse" message="tns:getPhoneCallPriceResponse"/>
+      <fault message="tns:RatingException" name="RatingException" wsam:Action="http://rs.udc.es/rating/RatingProvider/getPhoneCallPrice/Fault/RatingException"/>
+    </operation>
+  </portType>
+  <!--<binding name="RatingProviderPortBinding" type="tns:RatingProvider">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="getDiscount">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="RatingException">
+                <soap:fault name="RatingException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getPhoneCallPrice">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="RatingException">
+                <soap:fault name="RatingException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="RatingProviderService">
+        <port name="RatingProviderPort" binding="tns:RatingProviderPortBinding">
+            <soap:address location="http://localhost:7070/rs-telco-wscontrib/services/RatingService"/>
+        </port>
+    </service>-->
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/RatingService_schema.xsd</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<xs:schema version="1.0" targetNamespace="http://rs.udc.es/rating" xmlns:tns="http://rs.udc.es/rating" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="RatingException" nillable="true" type="xs:string"/>
+  <xs:element name="getDiscount" type="tns:getDiscount"/>
+  <xs:element name="getDiscountResponse" type="tns:getDiscountResponse"/>
+  <xs:element name="getPhoneCallPrice" type="tns:getPhoneCallPrice"/>
+  <xs:element name="getPhoneCallPriceResponse" type="tns:getPhoneCallPriceResponse"/>
+  <xs:complexType name="getPhoneCallPrice">
+    <xs:sequence>
+      <xs:element name="phoneCall" type="tns:phoneCall" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="phoneCall">
+    <xs:sequence>
+      <xs:element name="destinationNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="duration" type="xs:long" minOccurs="0"/>
+      <xs:element name="phoneCallId" type="xs:long" minOccurs="0"/>
+      <xs:element name="phoneCallType" type="tns:phoneCallType" minOccurs="0"/>
+      <xs:element name="startDate" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPhoneCallPriceResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getDiscount">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long"/>
+      <xs:element name="month" type="xs:short"/>
+      <xs:element name="year" type="xs:short"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getDiscountResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="phoneCallType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LOCAL"/>
+      <xs:enumeration value="NATIONAL"/>
+      <xs:enumeration value="INTERNATIONAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/BillingService.wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<!--Generated by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<definitions targetNamespace="http://rs.udc.es/billing" name="BillingProviderService" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://rs.udc.es/billing" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://rs.udc.es/billing" schemaLocation="BillingService_schema.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="createAndSendBill">
+    <part name="parameters" element="tns:createAndSendBill"/>
+  </message>
+  <message name="createAndSendBillResponse">
+    <part name="parameters" element="tns:createAndSendBillResponse"/>
+  </message>
+  <portType name="BillingProvider">
+    <operation name="createAndSendBill">
+      <input wsam:Action="http://rs.udc.es/billing/BillingProvider/createAndSendBillRequest" message="tns:createAndSendBill"/>
+      <output wsam:Action="http://rs.udc.es/billing/BillingProvider/createAndSendBillResponse" message="tns:createAndSendBillResponse"/>
+    </operation>
+  </portType>
+  <!--<binding name="BillingProviderPortBinding" type="tns:BillingProvider">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="createAndSendBill">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="BillingProviderService">
+        <port name="BillingProviderPort" binding="tns:BillingProviderPortBinding">
+            <soap:address location="http://localhost:7070/rs-telco-wscontrib/services/BillingService"/>
+        </port>
+    </service>-->
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/BillingService_schema.xsd</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<xs:schema version="1.0" targetNamespace="http://rs.udc.es/billing" xmlns:tns="http://rs.udc.es/billing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="createAndSendBill" type="tns:createAndSendBill"/>
+  <xs:element name="createAndSendBillResponse" type="tns:createAndSendBillResponse"/>
+  <xs:complexType name="createAndSendBill">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+      <xs:element name="month" type="xs:short"/>
+      <xs:element name="year" type="xs:short"/>
+      <xs:element name="priced-call" type="tns:pricedPhoneCall" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="discount" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pricedPhoneCall">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+      <xs:element name="destinationNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="duration" type="xs:long" minOccurs="0"/>
+      <xs:element name="phoneCallId" type="xs:long" minOccurs="0"/>
+      <xs:element name="phoneCallType" type="tns:phoneCallType" minOccurs="0"/>
+      <xs:element name="price" type="xs:double"/>
+      <xs:element name="startDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="type" type="tns:phoneCallType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="createAndSendBillResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:billSummary" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="billSummary">
+    <xs:sequence>
+      <xs:element name="amount" type="xs:double"/>
+      <xs:element name="billId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="phoneCallType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LOCAL"/>
+      <xs:enumeration value="NATIONAL"/>
+      <xs:enumeration value="INTERNATIONAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/Client.wsdl</con:url><con:content><![CDATA[<definitions name="Client" targetNamespace="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://j2ee.netbeans.org/wsdl/BPEL/src/Client" xmlns:ns="http://rs.udc.es/billing" xmlns:ns0="http://rs.udc.es/telco" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype">
+  <types>
+    <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BPEL/src/Client">
+      <xsd:import namespace="http://rs.udc.es/billing" schemaLocation="BillingService_schema.xsd"/>
+      <xsd:import namespace="http://rs.udc.es/telco" schemaLocation="TelcoService_schema.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="ClientOperationRequestData">
+    <part name="id" type="xsd:long"/>
+    <part name="month" type="xsd:byte"/>
+    <part name="year" type="xsd:int"/>
+  </message>
+  <message name="ClientOperationResponse">
+    <part name="idAndTotalBill" type="ns:createAndSendBillResponse"/>
+    <part name="paymentDone" type="xsd:boolean"/>
+    <part name="callList" type="ns0:findCallsToBillResponse"/>
+  </message>
+  <message name="clientPayOK">
+    <part name="id" type="xsd:long"/>
+    <part name="billAmount" type="ns:createAndSendBillResponse"/>
+  </message>
+  <message name="ClientOperationResponseBillInfo">
+    <part name="id" type="xsd:long"/>
+    <part name="month" type="xsd:byte"/>
+    <part name="year" type="xsd:int"/>
+  </message>
+  <message name="ClientOperationPayment">
+    <part name="id" type="xsd:long"/>
+    <part name="month" type="xsd:byte"/>
+    <part name="year" type="xsd:int"/>
+    <part name="succesfulPayment" type="xsd:boolean"/>
+  </message>
+  <portType name="ClientPortTypeMain">
+    <operation name="ClientConfirmBillOperation">
+      <input name="input1" message="tns:ClientOperationResponseBillInfo"/>
+      <output name="output1" message="tns:ClientOperationResponse"/>
+    </operation>
+    <operation name="ClientStartOperation">
+      <input name="input2" message="tns:ClientOperationRequestData"/>
+      <output name="output2" message="tns:clientPayOK"/>
+    </operation>
+    <operation name="ClientPaymentOperation">
+      <input name="input3" message="tns:ClientOperationPayment"/>
+      <output name="output3" message="tns:ClientOperationResponse"/>
+    </operation>
+  </portType>
+  <plnk:partnerLinkType name="ClientMain">
+    <!--A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+    <plnk:role name="ClientPortTypeRole" portType="tns:ClientPortTypeMain"/>
+  </plnk:partnerLinkType>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/TelcoService_schema.xsd</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<xs:schema version="1.0" targetNamespace="http://rs.udc.es/telco" xmlns:tns="http://rs.udc.es/telco" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="TelcoException" nillable="true" type="xs:string"/>
+  <xs:element name="changeStatus" type="tns:changeStatus"/>
+  <xs:element name="changeStatusResponse" type="tns:changeStatusResponse"/>
+  <xs:element name="findCallsToBill" type="tns:findCallsToBill"/>
+  <xs:element name="findCallsToBillResponse" type="tns:findCallsToBillResponse"/>
+  <xs:complexType name="changeStatus">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+      <xs:element name="month" type="xs:byte" minOccurs="0"/>
+      <xs:element name="year" type="xs:int" minOccurs="0"/>
+      <xs:element name="newPhoneCallStatus" type="tns:phoneCallStatus" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="changeStatusResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="findCallsToBill">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+      <xs:element name="month" type="xs:byte" minOccurs="0"/>
+      <xs:element name="year" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="findCallsToBillResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:phoneCall" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="phoneCall">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+      <xs:element name="destinationNumber" type="xs:string" minOccurs="0"/>
+      <xs:element name="duration" type="xs:long" minOccurs="0"/>
+      <xs:element name="phoneCallId" type="xs:long" minOccurs="0"/>
+      <xs:element name="phoneCallStatus" type="tns:phoneCallStatus" minOccurs="0"/>
+      <xs:element name="phoneCallType" type="tns:phoneCallType" minOccurs="0"/>
+      <xs:element name="startDate" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="phoneCallStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PENDING"/>
+      <xs:enumeration value="BILLED"/>
+      <xs:enumeration value="PAID"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="phoneCallType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LOCAL"/>
+      <xs:enumeration value="NATIONAL"/>
+      <xs:enumeration value="INTERNATIONAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/TelcoService.wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<!--Generated by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<definitions targetNamespace="http://rs.udc.es/telco" name="TelcoProviderService" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://rs.udc.es/telco" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://rs.udc.es/telco" schemaLocation="TelcoService_schema.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="changeStatus">
+    <part name="parameters" element="tns:changeStatus"/>
+  </message>
+  <message name="changeStatusResponse">
+    <part name="parameters" element="tns:changeStatusResponse"/>
+  </message>
+  <message name="TelcoException">
+    <part name="fault" element="tns:TelcoException"/>
+  </message>
+  <message name="findCallsToBill">
+    <part name="parameters" element="tns:findCallsToBill"/>
+  </message>
+  <message name="findCallsToBillResponse">
+    <part name="parameters" element="tns:findCallsToBillResponse"/>
+  </message>
+  <portType name="TelcoProvider">
+    <operation name="changeStatus">
+      <input wsam:Action="http://rs.udc.es/telco/TelcoProvider/changeStatusRequest" message="tns:changeStatus"/>
+      <output wsam:Action="http://rs.udc.es/telco/TelcoProvider/changeStatusResponse" message="tns:changeStatusResponse"/>
+      <fault message="tns:TelcoException" name="TelcoException" wsam:Action="http://rs.udc.es/telco/TelcoProvider/changeStatus/Fault/TelcoException"/>
+    </operation>
+    <operation name="findCallsToBill">
+      <input wsam:Action="http://rs.udc.es/telco/TelcoProvider/findCallsToBillRequest" message="tns:findCallsToBill"/>
+      <output wsam:Action="http://rs.udc.es/telco/TelcoProvider/findCallsToBillResponse" message="tns:findCallsToBillResponse"/>
+      <fault message="tns:TelcoException" name="TelcoException" wsam:Action="http://rs.udc.es/telco/TelcoProvider/findCallsToBill/Fault/TelcoException"/>
+    </operation>
+  </portType>
+  <!--<binding name="TelcoProviderPortBinding" type="tns:TelcoProvider">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="changeStatus">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="TelcoException">
+                <soap:fault name="TelcoException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="findCallsToBill">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="TelcoException">
+                <soap:fault name="TelcoException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="TelcoProviderService">
+        <port name="TelcoProviderPort" binding="tns:TelcoProviderPortBinding">
+            <soap:address location="http://localhost:7070/rs-telco-wscontrib/services/TelcoService"/>
+        </port>
+    </service>-->
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/RewardService.wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<!--Generated by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<definitions targetNamespace="http://rs.udc.es/reward" name="RewardProviderService" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://rs.udc.es/reward" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://rs.udc.es/reward" schemaLocation="RewardService_schema.xsd"/>
+    </xsd:schema>
+  </types>
+  <message name="getPoints">
+    <part name="parameters" element="tns:getPoints"/>
+  </message>
+  <message name="getPointsResponse">
+    <part name="parameters" element="tns:getPointsResponse"/>
+  </message>
+  <message name="RewardException">
+    <part name="fault" element="tns:RewardException"/>
+  </message>
+  <message name="getPendingPoints">
+    <part name="parameters" element="tns:getPendingPoints"/>
+  </message>
+  <message name="getPendingPointsResponse">
+    <part name="parameters" element="tns:getPendingPointsResponse"/>
+  </message>
+  <message name="addPendingPoints">
+    <part name="parameters" element="tns:addPendingPoints"/>
+  </message>
+  <message name="addPendingPointsResponse">
+    <part name="parameters" element="tns:addPendingPointsResponse"/>
+  </message>
+  <message name="confirmPendingPoints">
+    <part name="parameters" element="tns:confirmPendingPoints"/>
+  </message>
+  <message name="confirmPendingPointsResponse">
+    <part name="parameters" element="tns:confirmPendingPointsResponse"/>
+  </message>
+  <message name="removePendingPoints">
+    <part name="parameters" element="tns:removePendingPoints"/>
+  </message>
+  <message name="removePendingPointsResponse">
+    <part name="parameters" element="tns:removePendingPointsResponse"/>
+  </message>
+  <portType name="RewardProvider">
+    <operation name="getPoints">
+      <input wsam:Action="http://rs.udc.es/reward/RewardProvider/getPointsRequest" message="tns:getPoints"/>
+      <output wsam:Action="http://rs.udc.es/reward/RewardProvider/getPointsResponse" message="tns:getPointsResponse"/>
+      <fault message="tns:RewardException" name="RewardException" wsam:Action="http://rs.udc.es/reward/RewardProvider/getPoints/Fault/RewardException"/>
+    </operation>
+    <operation name="getPendingPoints">
+      <input wsam:Action="http://rs.udc.es/reward/RewardProvider/getPendingPointsRequest" message="tns:getPendingPoints"/>
+      <output wsam:Action="http://rs.udc.es/reward/RewardProvider/getPendingPointsResponse" message="tns:getPendingPointsResponse"/>
+      <fault message="tns:RewardException" name="RewardException" wsam:Action="http://rs.udc.es/reward/RewardProvider/getPendingPoints/Fault/RewardException"/>
+    </operation>
+    <operation name="addPendingPoints">
+      <input wsam:Action="http://rs.udc.es/reward/RewardProvider/addPendingPointsRequest" message="tns:addPendingPoints"/>
+      <output wsam:Action="http://rs.udc.es/reward/RewardProvider/addPendingPointsResponse" message="tns:addPendingPointsResponse"/>
+      <fault message="tns:RewardException" name="RewardException" wsam:Action="http://rs.udc.es/reward/RewardProvider/addPendingPoints/Fault/RewardException"/>
+    </operation>
+    <operation name="confirmPendingPoints">
+      <input wsam:Action="http://rs.udc.es/reward/RewardProvider/confirmPendingPointsRequest" message="tns:confirmPendingPoints"/>
+      <output wsam:Action="http://rs.udc.es/reward/RewardProvider/confirmPendingPointsResponse" message="tns:confirmPendingPointsResponse"/>
+      <fault message="tns:RewardException" name="RewardException" wsam:Action="http://rs.udc.es/reward/RewardProvider/confirmPendingPoints/Fault/RewardException"/>
+    </operation>
+    <operation name="removePendingPoints">
+      <input wsam:Action="http://rs.udc.es/reward/RewardProvider/removePendingPointsRequest" message="tns:removePendingPoints"/>
+      <output wsam:Action="http://rs.udc.es/reward/RewardProvider/removePendingPointsResponse" message="tns:removePendingPointsResponse"/>
+      <fault message="tns:RewardException" name="RewardException" wsam:Action="http://rs.udc.es/reward/RewardProvider/removePendingPoints/Fault/RewardException"/>
+    </operation>
+  </portType>
+  <!--<binding name="RewardProviderPortBinding" type="tns:RewardProvider">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="getPoints">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="RewardException">
+                <soap:fault name="RewardException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="getPendingPoints">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="RewardException">
+                <soap:fault name="RewardException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="addPendingPoints">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="RewardException">
+                <soap:fault name="RewardException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="confirmPendingPoints">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="RewardException">
+                <soap:fault name="RewardException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="removePendingPoints">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+            <fault name="RewardException">
+                <soap:fault name="RewardException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+    <service name="RewardProviderService">
+        <port name="RewardProviderPort" binding="tns:RewardProviderPortBinding">
+            <soap:address location="http://localhost:7070/rs-telco-wscontrib/services/RewardService"/>
+        </port>
+    </service>-->
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://XIAOMI-MI-GAMING-PRO-2:5050/CompositeApp1-sun-http-binding/BPEL/RewardService_schema.xsd</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (https://github.com/eclipse-ee4j/metro-jax-ws). RI's version is JAX-WS RI 3.0.2 git-revision#91dd558.-->
+<xs:schema version="1.0" targetNamespace="http://rs.udc.es/reward" xmlns:tns="http://rs.udc.es/reward" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="RewardException" nillable="true" type="xs:string"/>
+  <xs:element name="addPendingPoints" type="tns:addPendingPoints"/>
+  <xs:element name="addPendingPointsResponse" type="tns:addPendingPointsResponse"/>
+  <xs:element name="confirmPendingPoints" type="tns:confirmPendingPoints"/>
+  <xs:element name="confirmPendingPointsResponse" type="tns:confirmPendingPointsResponse"/>
+  <xs:element name="getPendingPoints" type="tns:getPendingPoints"/>
+  <xs:element name="getPendingPointsResponse" type="tns:getPendingPointsResponse"/>
+  <xs:element name="getPoints" type="tns:getPoints"/>
+  <xs:element name="getPointsResponse" type="tns:getPointsResponse"/>
+  <xs:element name="removePendingPoints" type="tns:removePendingPoints"/>
+  <xs:element name="removePendingPointsResponse" type="tns:removePendingPointsResponse"/>
+  <xs:complexType name="removePendingPoints">
+    <xs:sequence>
+      <xs:element name="customertId" type="xs:long" minOccurs="0"/>
+      <xs:element name="points" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="removePendingPointsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getPendingPoints">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPendingPointsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="confirmPendingPoints">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+      <xs:element name="points" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="confirmPendingPointsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getPoints">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPointsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addPendingPoints">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:long" minOccurs="0"/>
+      <xs:element name="points" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addPendingPointsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RatingService</con:endpoint></con:endpoints><con:operation id="1d9914fa-ee18-49a2-b8c5-36fb71b73944" isOneWay="false" action="" name="getDiscount" bindingOperationName="getDiscount" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2ed94390-0af0-4239-bebe-29e443737612" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RatingService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rat="http://rs.udc.es/rating">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <rat:getDiscount>\r
+         <customerId>?</customerId>\r
+         <month>?</month>\r
+         <year>?</year>\r
+      </rat:getDiscount>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/rating/RatingProvider/getDiscountRequest"/></con:call></con:operation><con:operation id="5579a139-042e-480d-833f-e2c2f737dc21" isOneWay="false" action="" name="getPhoneCallPrice" bindingOperationName="getPhoneCallPrice" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="31dd2de3-2b29-4a25-93a6-aa798884ec03" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://XIAOMI-MI-GAMING-PRO-2:7070/rs-telco-wscontrib/services/RatingService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:rat="http://rs.udc.es/rating">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <rat:getPhoneCallPrice>\r
+         <!--Optional:-->\r
+         <phoneCall>\r
+            <!--Optional:-->\r
+            <destinationNumber>?</destinationNumber>\r
+            <!--Optional:-->\r
+            <duration>?</duration>\r
+            <!--Optional:-->\r
+            <phoneCallId>?</phoneCallId>\r
+            <!--Optional:-->\r
+            <phoneCallType>?</phoneCallType>\r
+            <!--Optional:-->\r
+            <startDate>?</startDate>\r
+         </phoneCall>\r
+      </rat:getPhoneCallPrice>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://rs.udc.es/rating/RatingProvider/getPhoneCallPriceRequest"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
