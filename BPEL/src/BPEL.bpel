@@ -258,103 +258,6 @@
             </copy>
         </assign>
         <reply name="ReplyAmountBillId" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="ClientAskBillOperationOut"/> 
-
-        <!--<pick name="Pick1">
-            <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientStartOperation" portType="ns0:ClientPortTypeMain" variable="BillReceivedNotification"></onMessage>
-        </pick>
-        <assign name="AssingBilled">
-            <copy>
-                <from>'BILLED'</from>
-                <to>$ChangeStatusIn.parameters/newPhoneCallStatus</to>
-            </copy>
-            <copy>
-                <from variable="clientData" part="id"/>
-                <to>$ChangeStatusIn.parameters/customerId</to>
-            </copy>
-            <copy>
-                <from variable="clientData" part="month"/>
-                <to>$ChangeStatusIn.parameters/month</to>
-            </copy>
-            <copy>
-                <from variable="clientData" part="year"/>
-                <to>$ChangeStatusIn.parameters/year</to>
-            </copy>
-        </assign>
-        <invoke name="Invoke5" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn" outputVariable="ChangeStatusOut"/>
-        <assign name="AssignPoints">
-            <copy>
-                <from>round($CreateAndSendBillOut.parameters/return/amount div 10)</from>
-                <to>$AddPendingPointsIn.parameters/points</to>
-            </copy>
-            <copy>
-                <from variable="clientData" part="id"/>
-                <to>$AddPendingPointsIn.parameters/customerId</to>
-            </copy>
-        </assign>
-        <invoke name="Invoke6" partnerLink="RewardService" operation="addPendingPoints" xmlns:tns="http://rs.udc.es/reward" portType="tns:RewardProvider" inputVariable="AddPendingPointsIn" outputVariable="AddPendingPointsOut"/>
-        <pick name="Pick2">
-            <onMessage></onMessage>
-        </pick>
-        <receive name="Receive1"/>
-        <receive name="Receive2" createInstance="no" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientMainOperation" portType="ns0:ClientPortTypeMain" variable="payOk"/>
-        <if name="If1">
-            <scope name="Scope2">
-                <variables>
-                        <variable name="ConfirmPendingPointsOut" messageType="ns6:confirmPendingPointsResponse"/>
-                            <variable name="ConfirmPendingPointsIn" messageType="ns6:confirmPendingPoints"/>
-                            <variable name="ChangeStatusOut1" messageType="ns3:changeStatusResponse"/>
-                            <variable name="ChangeStatusIn1" messageType="ns3:changeStatus"/>
-                    </variables>
-                    <sequence name="Sequence2">
-                        <assign name="Assign4">
-                            <copy>
-                                <from>$getCallsIn.parameters/customerId</from>
-                                <to>$ChangeStatusIn1.parameters/customerId</to>
-                            </copy>
-                            <copy>
-                                <from>$getCallsIn.parameters/month</from>
-                                <to>$ChangeStatusIn1.parameters/month</to>
-                            </copy>
-                            <copy>
-                                <from>$getCallsIn.parameters/year</from>
-                                <to>$ChangeStatusIn1.parameters/year</to>
-                            </copy>
-                            <copy>
-                                <from>'PAID'</from>
-                                <to>$ChangeStatusIn1.parameters/newPhoneCallStatus</to>
-                            </copy>
-                        </assign>
-                            <invoke name="Invoke7" partnerLink="TelcoService" operation="changeStatus" portType="ns3:TelcoProvider" inputVariable="ChangeStatusIn1" outputVariable="ChangeStatusOut1"/>
-                            <assign name="Assign5">
-                            <copy>
-                                <from>$AddPendingPointsIn.parameters/points</from>
-                                <to>$ConfirmPendingPointsIn.parameters/points</to>
-                            </copy>
-                            <copy>
-                                <from>$AddPendingPointsIn.parameters/customerId</from>
-                                <to>$ConfirmPendingPointsIn.parameters/customerId</to>
-                            </copy>
-                        </assign>
-                            <invoke name="Invoke8" partnerLink="RewardService" operation="confirmPendingPoints" portType="ns6:RewardProvider" inputVariable="ConfirmPendingPointsIn" outputVariable="ConfirmPendingPointsOut"/>
-                    </sequence>
-            </scope>
-            <else>
-                <sequence name="FlowSequence">
-                    <assign name="Assign3">
-                            <copy>
-                                    <from>$AddPendingPointsIn.parameters/customerId</from>
-                                        <to>$RemovePendingPointsIn.parameters/customertId</to>
-                                </copy>
-                                <copy>
-                                    <from>$AddPendingPointsIn.parameters/points</from>
-                                        <to>$RemovePendingPointsIn.parameters/points</to>
-                                </copy>
-                        </assign>
-                        <invoke name="removePoints" partnerLink="RewardService" operation="removePendingPoints" portType="ns6:RewardProvider" inputVariable="RemovePendingPointsIn" outputVariable="RemovePendingPointsOut"/>
-                </sequence>
-            </else>
-        </if>
-        <reply name="Reply1" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientMainOperation" portType="ns0:ClientPortTypeMain" variable="ClientOperationOut"/>-->
         <pick name="Pick1">
             <onMessage partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationIn">
                 <correlations>
@@ -418,10 +321,6 @@
                 <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/billId</to>
             </copy>
             <copy>
-                <from>$GetDiscountOut.parameters/return</from>
-                <to>$ClientConfirmBillOperationOut.callList/discount</to>
-            </copy>
-            <copy>
                 <from>$CostList.parameters/priced-call</from>
                 <to>$ClientConfirmBillOperationOut.callList/priced-call</to>
             </copy>
@@ -436,6 +335,10 @@
             <copy>
                 <from variable="ClientConfirmBillOperationIn" part="id"/>
                 <to>$ClientConfirmBillOperationOut.callList/customerId</to>
+            </copy>
+            <copy>
+                <from variable="Discount"/>
+                <to>$ClientConfirmBillOperationOut.callList/discount</to>
             </copy>
         </assign>
         <reply name="ReplyBilling" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationOut"/>
