@@ -417,6 +417,26 @@
                 <from>$CreateAndSendBillOut.parameters/return/billId</from>
                 <to>$ClientConfirmBillOperationOut.idAndTotalBill/return/billId</to>
             </copy>
+            <copy>
+                <from>$GetDiscountOut.parameters/return</from>
+                <to>$ClientConfirmBillOperationOut.callList/discount</to>
+            </copy>
+            <copy>
+                <from>$CostList.parameters/priced-call</from>
+                <to>$ClientConfirmBillOperationOut.callList/priced-call</to>
+            </copy>
+            <copy>
+                <from variable="ClientConfirmBillOperationIn" part="month"/>
+                <to>$ClientConfirmBillOperationOut.callList/month</to>
+            </copy>
+            <copy>
+                <from variable="ClientConfirmBillOperationIn" part="year"/>
+                <to>$ClientConfirmBillOperationOut.callList/year</to>
+            </copy>
+            <copy>
+                <from variable="ClientConfirmBillOperationIn" part="id"/>
+                <to>$ClientConfirmBillOperationOut.callList/customerId</to>
+            </copy>
         </assign>
         <reply name="ReplyBilling" partnerLink="PartnerLinkPhoneCallSearch" operation="ClientConfirmBillOperation" portType="ns0:ClientPortTypeMain" variable="ClientConfirmBillOperationOut"/>
         <invoke name="AddPendingPoints" partnerLink="RewardService" operation="addPendingPoints" portType="ns6:RewardProvider" inputVariable="AddPendingPointsIn" outputVariable="AddPendingPointsOut"/>
